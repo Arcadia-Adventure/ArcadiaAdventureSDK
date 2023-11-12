@@ -1,0 +1,31 @@
+{
+  "id":
+  [
+    {
+        "platform": "Android",
+        "gameName": "Test Game Android",
+        "bundleId": "com.al.testapp",
+        "admobAppId": "ca-app-pub-1262715519928583~5495911865",
+        "appOpenAdId": "ca-app-pub-3940256099942544/3419835294",
+        "bannerAdId": "ca-app-pub-3940256099942544/6300978111",
+        "mrecAdId": "9031a0265388e687",
+        "interstitialAdId": "ca-app-pub-3940256099942544/1033173712",
+        "rewardedVideoAdId": "ca-app-pub-3940256099942544/5224354917",
+        "gameKey_GameAnaytics": "2cdedb4c4be3969f0b55026347bcaa08",
+        "secretKey_GameAnaytics": "cdea76d46957e5a05b56cde39326344ccc627496"
+    },
+    {
+        "platform": "IOS",
+        "gameName": "Test Game IOS",
+        "bundleId": "com.al.constructionquest",
+        "admobAppId": "ca-app-pub-1262715519928583~9617252251",
+        "appOpenAdId": "ca-app-pub-3940256099942544/5662855259",
+        "bannerAdId": "ca-app-pub-3940256099942544/2934735716",
+        "mrecAdId": "0219baf0ac78a346",
+        "interstitialAdId": "ca-app-pub-3940256099942544/4411468910",
+        "rewardedVideoAdId": "ca-app-pub-3940256099942544/1712485313",
+        "gameKey_GameAnaytics": "5a82fbcc40ffe8698af984e919ead817",
+        "secretKey_GameAnaytics": "7f2ae5abd4b0f45b8323194bec3479474a483533"
+    }
+  ]
+}
