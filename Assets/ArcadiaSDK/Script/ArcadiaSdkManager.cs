@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
 #if gameanalytics_enabled
@@ -136,7 +137,7 @@ public class ArcadiaSdkManager : MonoBehaviour
 				}
 			}
 			LoadAds();
-
+            SceneManager.LoadScene(1);
 		});
 
 		// Listen to application foreground / background events.
