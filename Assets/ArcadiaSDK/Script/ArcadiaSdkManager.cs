@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
+using GoogleMobileAds.Editor;
 #if gameanalytics_enabled
 using GameAnalyticsSDK;
 #endif
@@ -99,24 +100,25 @@ public class ArcadiaSdkManager : MonoBehaviour
 
 		List<String> deviceIds = new List<String>() { AdRequest.TestDeviceSimulator };
 
-		// Add some test device IDs (replace with your own device IDs).
+        // Add some test device IDs (replace with your own device IDs).
 #if UNITY_IPHONE
         //deviceIds.Add("D8E71788-08AE-4095-ACE6-F35B24D77298");
         
 
 #elif UNITY_ANDROID
-		//deviceIds.Add("75EF8D155528C04DACBBA6F36F433035");
+        //deviceIds.Add("75EF8D155528C04DACBBA6F36F433035");
 #endif
 
-		// Configure TagForChildDirectedTreatment and test device IDs.
+        // Configure TagForChildDirectedTreatment and test device IDs.
+        string admobappID = Ids.admobAppId;
+
 		RequestConfiguration requestConfiguration =
 			new RequestConfiguration.Builder()
 			.SetTagForChildDirectedTreatment(tagForChild)
 			.SetTestDeviceIds(deviceIds).build();
 		MobileAds.SetRequestConfiguration(requestConfiguration);
-
-		// Initialize the Google Mobile Ads SDK.
-		//MobileAds.Initialize(HandleInitCompleteAction);
+        // Initialize the Google Mobile Ads SDK.
+        //MobileAds.Initialize(HandleInitCompleteAction);
 		MobileAds.Initialize((initStatus) =>
 		{
 			Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
@@ -640,8 +642,7 @@ public static string GetAdmobAppID()
 		{
 			PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, myGameIds.bundleId);
 		}
-
-		Ids = myGameIds; 
+		Ids = myGameIds;
 #endif
 	}
 	 static void GetIdByName()

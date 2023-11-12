@@ -644,7 +644,7 @@ MonoBehaviour:
     rewardedVideoAdId: 0f8ba2dcd52817c8
     gameKey_GameAnaytics: 2cdedb4c4be3969f0b55026347bcaa08umar
     secretKey_GameAnaytics: cdea76d46957e5a05b56cde39326344ccc627496
-  enableLogs: 1
+  enableLogs: 0
 --- !u!4 &2130949572
 Transform:
   m_ObjectHideFlags: 0

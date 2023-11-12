@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ArcadiaSDK/SDK Scenes/Ad Splash.unity
     guid: d5d2077ee145948c38a96f9e57674216
+  - enabled: 1
+    path: Assets/ArcadiaSDK/SDK Scenes/game.unity
+    guid: 794e87fa5f1a947b0b60ca61a80b2192
   m_configObjects: {}
