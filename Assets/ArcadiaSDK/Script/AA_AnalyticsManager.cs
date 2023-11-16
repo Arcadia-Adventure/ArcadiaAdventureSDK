@@ -33,6 +33,7 @@ public class AA_AnalyticsManager : MonoBehaviour
         if(_instance == null)
         {	
             _instance = this.gameObject.GetComponent<AA_AnalyticsManager>();
+            _instance.InIt();
             DontDestroyOnLoad(this);
         }
         else

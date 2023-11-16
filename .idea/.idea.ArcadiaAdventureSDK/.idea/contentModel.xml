@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="ArcadiaAdventureSDK.sln" t="IncludeFlat" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="ArcadiaSDK" t="Include">
+          <e p="Editor" t="Include">
+            <e p="ArcadiaEditor.cs" t="Include" />
+            <e p="PostBuildProcessor.cs" t="Include" />
+            <e p="PreBuildProcessor.cs" t="Include" />
+          </e>
+          <e p="InternetConnectivity" t="Include">
+            <e p="Resources" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="InternetManager.cs" t="Include" />
+              <e p="Reconnect.cs" t="Include" />
+            </e>
+            <e p="Sprites" t="Include" />
+          </e>
+          <e p="OnScreenLogs" t="Include">
+            <e p="FPSLabel" t="Include">
+              <e p="FPSLabel.cs" t="Include" />
+            </e>
+            <e p="IngameDebugConsole" t="Include">
+              <e p="Android" t="Include">
+                <e p="DebugLogLogcatListener.cs" t="Include" />
+              </e>
+              <e p="Editor" t="Include">
+                <e p="DebugLogManagerEditor.cs" t="Include" />
+                <e p="IngameDebugConsole.Editor.asmdef" t="Include" />
+              </e>
+              <e p="IngameDebugConsole.Runtime.asmdef" t="Include" />
+              <e p="iOS" t="Include" />
+              <e p="Prefabs" t="Include" />
+              <e p="Readme.txt" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="CircularBuffer.cs" t="Include" />
+                <e p="Commands" t="Include">
+                  <e p="PlayerPrefsCommands.cs" t="Include" />
+                  <e p="SceneCommands.cs" t="Include" />
+                  <e p="TimeCommands.cs" t="Include" />
+                </e>
+                <e p="ConsoleMethodAttribute.cs" t="Include" />
+                <e p="DebugLogConsole.cs" t="Include" />
+                <e p="DebugLogEntry.cs" t="Include" />
+                <e p="DebugLogIndexList.cs" t="Include" />
+                <e p="DebugLogItem.cs" t="Include" />
+                <e p="DebugLogItemCopyWebGL.cs" t="Include" />
+                <e p="DebugLogManager.cs" t="Include" />
+                <e p="DebugLogPopup.cs" t="Include" />
+                <e p="DebugLogRecycledListView.cs" t="Include" />
+                <e p="DebugLogResizeListener.cs" t="Include" />
+                <e p="DebugsOnScrollListener.cs" t="Include" />
+                <e p="EventSystemHandler.cs" t="Include" />
+              </e>
+              <e p="Sprites" t="Include">
+                <e p="Unused" t="Include" />
+              </e>
+              <e p="WebGL" t="Include" />
+            </e>
+            <e p="LogsSetting.cs" t="Include" />
+            <e p="Resources" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="GameIdsFile.json" t="Include" />
+          </e>
+          <e p="Script" t="Include">
+            <e p="AA_AnalyticsManager.cs" t="Include" />
+            <e p="AdapterInfo.cs" t="Include" />
+            <e p="ArcadiaSdkManager.cs" t="Include" />
+            <e p="StoreReviewManager.cs" t="Include" />
+          </e>
+          <e p="SDK Scenes" t="Include" />
+        </e>
+        <e p="ExternalDependencyManager" t="Include">
+          <e p="Editor" t="Include">
+            <e p="1.2.177" t="Include" />
+            <e p="external-dependency-manager_version-1.2.177_manifest.txt" t="Include" />
+          </e>
+        </e>
+        <e p="GameAnalytics" t="Include">
+          <e p="Editor" t="Include">
+            <e p="Android" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+            <e p="GA_AssetPostprocessor.cs" t="Include" />
+            <e p="GA_AutoRun.cs" t="Include" />
+            <e p="GA_ContinuationManager.cs" t="Include" />
+            <e p="GA_EditorUtilities.cs" t="Include" />
+            <e p="GA_Menu.cs" t="Include" />
+            <e p="GA_PostprocessBuild.cs" t="Include" />
+            <e p="GA_SettingsInspector.cs" t="Include" />
+            <e p="GA_SignUp.cs" t="Include" />
+            <e p="GA_UpdateWindow.cs" t="Include" />
+            <e p="GameAnalyticsInspector.cs" t="Include" />
+            <e p="Playmaker" t="Include">
+              <e p="PlayMakerPresenceCheck.cs" t="Include" />
+              <e p="SendProgressionEventActionEditor.cs" t="Include" />
+              <e p="SendResourceEventActionEditor.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Gizmos" t="Include">
+            <e p="GameAnalytics" t="Include">
+              <e p="Images" t="Include" />
+            </e>
+          </e>
+          <e p="Plugins" t="Include">
+            <e p="Android" t="Include" />
+            <e p="iOS" t="Include" />
+            <e p="Linux" t="Include" />
+            <e p="Playmaker" t="Include">
+              <e p="Examples" t="Include" />
+              <e p="GAInitialize.cs" t="Include" />
+              <e p="GetABTestingId.cs" t="Include" />
+              <e p="GetABTestingVariantId.cs" t="Include" />
+              <e p="GetRemoteConfigsValueAsString.cs" t="Include" />
+              <e p="IsRemoteConfigsReady.cs" t="Include" />
+              <e p="SendAdEvent.cs" t="Include" />
+              <e p="SendBusinessEvent.cs" t="Include" />
+              <e p="SendDesignEvent.cs" t="Include" />
+              <e p="SendErrorEvent.cs" t="Include" />
+              <e p="SendProgressionEvent.cs" t="Include" />
+              <e p="SendResourceEvent.cs" t="Include" />
+              <e p="SetCustomDimension.cs" t="Include" />
+            </e>
+            <e p="Prefabs" t="Include" />
+            <e p="SamsungTV" t="Include" />
+            <e p="Scripts" t="Include">
+              <e p="ATT" t="Include">
+                <e p="GameAnalyticsATTClient.cs" t="Include" />
+                <e p="GameAnalyticsATTObjCBridge.cs" t="Include" />
+              </e>
+              <e p="Enums.cs" t="Include" />
+              <e p="Events" t="Include">
+                <e p="GA_Ads.cs" t="Include" />
+                <e p="GA_Business.cs" t="Include" />
+                <e p="GA_Debug.cs" t="Include" />
+                <e p="GA_Design.cs" t="Include" />
+                <e p="GA_Error.cs" t="Include" />
+                <e p="GA_Progression.cs" t="Include" />
+                <e p="GA_Resource.cs" t="Include" />
+                <e p="GA_Setup.cs" t="Include" />
+                <e p="GA_SpecialEvents.cs" t="Include" />
+                <e p="GAValidator.cs" t="Include" />
+              </e>
+              <e p="GameAnalytics.cs" t="Include" />
+              <e p="IGameAnalyticsATTListener.cs" t="Include" />
+              <e p="ILRD" t="Include">
+                <e p="AdMob" t="Include">
+                  <e p="GAAdMobIntegration.cs" t="Include" />
+                </e>
+                <e p="Aequus" t="Include">
+                  <e p="GAAequusIntegration.cs" t="Include" />
+                </e>
+                <e p="Fyber" t="Include">
+                  <e p="GAFyberIntegration.cs" t="Include" />
+                </e>
+                <e p="GameAnalyticsILRD.cs" t="Include" />
+                <e p="HyperBid" t="Include">
+                  <e p="GAHyperBidIntegration.cs" t="Include" />
+                </e>
+                <e p="IronSource" t="Include">
+                  <e p="GAIronSourceIntegration.cs" t="Include" />
+                </e>
+                <e p="Max" t="Include">
+                  <e p="GAMaxIntegration.cs" t="Include" />
+                </e>
+                <e p="Mopub" t="Include">
+                  <e p="GAMopubIntegration.cs" t="Include" />
+                </e>
+                <e p="TopOn" t="Include">
+                  <e p="GATopOnIntegration.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Setup" t="Include">
+                <e p="Settings.cs" t="Include" />
+              </e>
+              <e p="State" t="Include">
+                <e p="GAState.cs" t="Include" />
+              </e>
+              <e p="Utilities" t="Include">
+                <e p="GA_MiniJson.cs" t="Include" />
+              </e>
+              <e p="Wrapper" t="Include">
+                <e p="GA_AndroidWrapper.cs" t="Include" />
+                <e p="GA_iOSWrapper.cs" t="Include" />
+                <e p="GA_MonoWrapper.cs" t="Include" />
+                <e p="GA_TizenWrapper.cs" t="Include" />
+                <e p="GA_tvOSWrapper.cs" t="Include" />
+                <e p="GA_UWPWrapper.cs" t="Include" />
+                <e p="GA_WebGLWrapper.cs" t="Include" />
+                <e p="GA_Wrapper.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Tizen" t="Include" />
+            <e p="tvOS" t="Include" />
+            <e p="WebGL" t="Include" />
+            <e p="Windows" t="Include">
+              <e p="x64" t="Include" />
+              <e p="x86" t="Include" />
+            </e>
+            <e p="WSA" t="Include">
+              <e p="ARM" t="Include" />
+              <e p="x64" t="Include" />
+              <e p="x86" t="Include" />
+            </e>
+          </e>
+          <e p="Readme.txt" t="Include" />
+        </e>
+        <e p="GoogleMobileAds" t="Include">
+          <e p="Editor" t="Include">
+            <e p="BuildPreProcessor.cs" t="Include" />
+            <e p="EditorPathUtils.cs" t="Include" />
+            <e p="GoogleMobileAds.Editor.asmdef" t="Include" />
+            <e p="GoogleMobileAdsDependencies.xml" t="Include" />
+            <e p="GoogleMobileAdsSettings.cs" t="Include" />
+            <e p="GoogleMobileAdsSettingsEditor.cs" t="Include" />
+            <e p="GoogleMobileAdsSKAdNetworkItems.xml" t="Include" />
+            <e p="GoogleUmpDependencies.xml" t="Include" />
+            <e p="ManifestProcessor.cs" t="Include" />
+            <e p="PListProcessor.cs" t="Include" />
+            <e p="Resources" t="Include">
+              <e p="PlaceholderAds" t="Include">
+                <e p="AdImages" t="Include" />
+                <e p="AdInspector" t="Include" />
+                <e p="AppOpen" t="Include" />
+                <e p="Banners" t="Include" />
+                <e p="Interstitials" t="Include" />
+                <e p="Rewarded" t="Include" />
+              </e>
+              <e p="Ump" t="Include" />
+            </e>
+          </e>
+          <e p="GoogleMobileAds_version-8.5.3_manifest.txt" t="Include" />
+          <e p="link.xml" t="Include" />
+          <e p="Mediation" t="Include">
+            <e p="AdColony" t="Include">
+              <e p="Api" t="Include">
+                <e p="AdColony" t="Include">
+                  <e p="AdColonyAppOptions.cs" t="Include" />
+                  <e p="AdColonyMediationExtras.cs" t="Include" />
+                </e>
+                <e p="MediationExtras.cs" t="Include" />
+              </e>
+              <e p="Common" t="Include">
+                <e p="AdColony" t="Include">
+                  <e p="DummyClient.cs" t="Include" />
+                  <e p="IAdColonyAppOptionsClient.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Editor" t="Include">
+                <e p="AdColonyMediationDependencies.xml" t="Include" />
+              </e>
+              <e p="Platforms" t="Include">
+                <e p="Android" t="Include">
+                  <e p="AdColony" t="Include">
+                    <e p="AdColonyAppOptionsClient.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="iOS" t="Include">
+                  <e p="AdColony" t="Include">
+                    <e p="AdColonyAppOptionsClient.cs" t="Include" />
+                    <e p="Externs.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="Mediation" t="Include">
+                  <e p="AdColonyAppOptionsClientFactory.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Plugins" t="Include">
+                <e p="Android" t="Include">
+                  <e p="GoogleMobileAdsAdColonyMediation" t="Include">
+                    <e p="AndroidManifest.xml" t="Include" />
+                  </e>
+                </e>
+                <e p="iOS" t="Include" />
+              </e>
+            </e>
+            <e p="AppLovin" t="Include">
+              <e p="Api" t="Include">
+                <e p="AppLovin.cs" t="Include" />
+              </e>
+              <e p="Common" t="Include">
+                <e p="DummyClient.cs" t="Include" />
+                <e p="IAppLovinClient.cs" t="Include" />
+              </e>
+              <e p="Editor" t="Include">
+                <e p="AppLovinMediationDependencies.xml" t="Include" />
+                <e p="AppLovinPostProcessBuild.cs" t="Include" />
+              </e>
+              <e p="Platforms" t="Include">
+                <e p="Android" t="Include">
+                  <e p="AppLovinClient.cs" t="Include" />
+                </e>
+                <e p="iOS" t="Include">
+                  <e p="AppLovinClient.cs" t="Include" />
+                  <e p="Externs.cs" t="Include" />
+                </e>
+                <e p="Mediation" t="Include">
+                  <e p="AppLovinClientFactory.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Plugins" t="Include">
+                <e p="Android" t="Include">
+                  <e p="AndroidManifest.xml" t="Include" />
+                </e>
+                <e p="iOS" t="Include" />
+              </e>
+            </e>
+            <e p="UnityAds" t="Include">
+              <e p="Api" t="Include">
+                <e p="UnityAds.cs" t="Include" />
+              </e>
+              <e p="Common" t="Include">
+                <e p="DummyClient.cs" t="Include" />
+                <e p="IUnityAdsClient.cs" t="Include" />
+              </e>
+              <e p="Editor" t="Include">
+                <e p="UnityMediationDependencies.xml" t="Include" />
+              </e>
+              <e p="Platforms" t="Include">
+                <e p="Android" t="Include">
+                  <e p="UnityAdsClient.cs" t="Include" />
+                </e>
+                <e p="iOS" t="Include">
+                  <e p="Externs.cs" t="Include" />
+                  <e p="UnityAdsClient.cs" t="Include" />
+                </e>
+                <e p="Mediation" t="Include">
+                  <e p="UnityAdsClientFactory.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Plugins" t="Include">
+                <e p="iOS" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Resources" t="Include" />
+        </e>
+        <e p="GooglePlayPlugins" t="Include">
+          <e p="com.google.android.appbundle" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Google.Android.AppBundle.Editor.asmdef" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="AndroidAppBundle.cs" t="Include" />
+                <e p="AndroidBuildException.cs" t="Include" />
+                <e p="AndroidBuildHelper.cs" t="Include" />
+                <e p="AndroidBuildOptions.cs" t="Include" />
+                <e p="AndroidBuildReport.cs" t="Include" />
+                <e p="AssetBundleBuilder.cs" t="Include" />
+                <e p="AssetPack.cs" t="Include" />
+                <e p="AssetPackConfig.cs" t="Include" />
+                <e p="AssetPackConfigSerializer.cs" t="Include" />
+                <e p="AssetPackDeliveryMode.cs" t="Include" />
+                <e p="Bundletool.cs" t="Include" />
+                <e p="BundletoolBuildMode.cs" t="Include" />
+                <e p="CompressionOptions.cs" t="Include" />
+                <e p="Internal" t="Include">
+                  <e p="AndroidArchitectureHelper.cs" t="Include" />
+                  <e p="AndroidManifest" t="Include">
+                    <e p="AssetPackManifestHelper.cs" t="Include" />
+                    <e p="IAssetPackManifestTransformer.cs" t="Include" />
+                    <e p="ManifestConstants.cs" t="Include" />
+                  </e>
+                  <e p="AppBundleEditorMenu.cs" t="Include" />
+                  <e p="AppBundlePublisher.cs" t="Include" />
+                  <e p="AssetPackManifestTransformerRegistry.cs" t="Include" />
+                  <e p="AssetPacks" t="Include">
+                    <e p="AssetBundleFolder.cs" t="Include" />
+                    <e p="AssetBundlePack.cs" t="Include" />
+                    <e p="AssetBundleVariant.cs" t="Include" />
+                    <e p="AssetDeliveryConfig.cs" t="Include" />
+                    <e p="AssetDeliveryConfigSerializer.cs" t="Include" />
+                    <e p="AssetDeliveryWindow.cs" t="Include" />
+                    <e p="AssetPackError.cs" t="Include" />
+                    <e p="AssetPackFolderState.cs" t="Include" />
+                    <e p="AssetPackValidatorRegistry.cs" t="Include" />
+                    <e p="IAssetPackValidator.cs" t="Include" />
+                    <e p="TextureTargetingTools.cs" t="Include" />
+                  </e>
+                  <e p="BuildAndRunner.cs" t="Include" />
+                  <e p="BuildSettingsWindow.cs" t="Include" />
+                  <e p="BuildTools" t="Include">
+                    <e p="AndroidAssetPackagingTool.cs" t="Include" />
+                    <e p="AndroidBuilder.cs" t="Include" />
+                    <e p="AndroidBuildTools.cs" t="Include" />
+                    <e p="AndroidDebugBridge.cs" t="Include" />
+                    <e p="AndroidSdk.cs" t="Include" />
+                    <e p="AndroidSdkPlatform.cs" t="Include" />
+                    <e p="ApkSigner.cs" t="Include" />
+                    <e p="AppBundleBuilder.cs" t="Include" />
+                    <e p="AppBundleRunner.cs" t="Include" />
+                    <e p="BuildToolLogger.cs" t="Include" />
+                    <e p="BuildToolNotInitializedException.cs" t="Include" />
+                    <e p="BundletoolConfig.cs" t="Include" />
+                    <e p="BundletoolExtensions.cs" t="Include" />
+                    <e p="BundletoolHelper.cs" t="Include" />
+                    <e p="IBuildTool.cs" t="Include" />
+                    <e p="JarSigner.cs" t="Include" />
+                    <e p="JavaUtils.cs" t="Include" />
+                    <e p="PostBuildRunner.cs" t="Include" />
+                    <e p="PostBuildTask.cs" t="Include" />
+                    <e p="ReleaseBuildHelper.cs" t="Include" />
+                    <e p="ZipUtils.cs" t="Include" />
+                  </e>
+                  <e p="BuiltInPadHelper.cs" t="Include" />
+                  <e p="Config" t="Include">
+                    <e p="AndroidBuildConfiguration.cs" t="Include" />
+                    <e p="SerializableAssetBundle.cs" t="Include" />
+                    <e p="SerializableAssetPack.cs" t="Include" />
+                    <e p="SerializableAssetPackConfig.cs" t="Include" />
+                    <e p="SerializableMultiTargetingAssetBundle.cs" t="Include" />
+                    <e p="SerializableMultiTargetingAssetPack.cs" t="Include" />
+                    <e p="SerializableTargetedDirectoryPath.cs" t="Include" />
+                    <e p="SerializationHelper.cs" t="Include" />
+                  </e>
+                  <e p="CreateBundleOptions.cs" t="Include" />
+                  <e p="DeprecatedAarDetector.cs" t="Include" />
+                  <e p="GoogleMenuItems.cs" t="Include" />
+                  <e p="IBuildAndRunExtension.cs" t="Include" />
+                  <e p="IBuildModeProvider.cs" t="Include" />
+                  <e p="PlayCoreConflictDetector.cs" t="Include" />
+                  <e p="PlayServices" t="Include">
+                    <e p="AndroidSdkManager.cs" t="Include" />
+                    <e p="CommandLine.cs" t="Include" />
+                    <e p="CommandLineDialog.cs" t="Include" />
+                    <e p="Logger.cs" t="Include" />
+                    <e p="PlayServicesResolver.cs" t="Include" />
+                    <e p="TextAreaDialog.cs" t="Include" />
+                  </e>
+                  <e p="Registry.cs" t="Include" />
+                  <e p="Utils" t="Include">
+                    <e p="AndroidSdkPackageInstaller.cs" t="Include" />
+                    <e p="CommandLineParameters.cs" t="Include" />
+                    <e p="EmptyCollection.cs" t="Include" />
+                    <e p="EmptyDictionary.cs" t="Include" />
+                    <e p="NameAndDescriptionAttribute.cs" t="Include" />
+                    <e p="PostBuildCommandLineDialog.cs" t="Include" />
+                    <e p="RegexHelper.cs" t="Include" />
+                    <e p="WindowUtils.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="TextureCompressionFormat.cs" t="Include" />
+              </e>
+              <e p="Tools" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.google.play.common" t="Include">
+            <e p="package.json" t="Include" />
+            <e p="Runtime" t="Include">
+              <e p="Google.Play.Common.asmdef" t="Include" />
+              <e p="Plugins" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="Internal" t="Include">
+                  <e p="AndroidConstants.cs" t="Include" />
+                  <e p="PlayAsyncOperationImpl.cs" t="Include" />
+                </e>
+                <e p="LoadingScreen" t="Include">
+                  <e p="LoadingBar.cs" t="Include" />
+                  <e p="LoadingScreen.cs" t="Include" />
+                  <e p="ScrollingFillAnimator.cs" t="Include" />
+                </e>
+                <e p="PlayAsyncOperation.cs" t="Include" />
+                <e p="UnityPlayerHelper.cs" t="Include" />
+                <e p="VoidResult.cs" t="Include" />
+              </e>
+              <e p="Textures" t="Include" />
+            </e>
+          </e>
+          <e p="com.google.play.core" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="Proguard" t="Include">
+              <e p="common.txt" t="Include" />
+            </e>
+            <e p="Runtime" t="Include">
+              <e p="Google.Play.Core.asmdef" t="Include" />
+              <e p="Plugins" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="Internal" t="Include">
+                  <e p="ActivityResult.cs" t="Include" />
+                  <e p="PlayCoreConstants.cs" t="Include" />
+                  <e p="PlayCoreEventHandler.cs" t="Include" />
+                  <e p="PlayCoreHelper.cs" t="Include" />
+                  <e p="PlayCoreOnFailureListener.cs" t="Include" />
+                  <e p="PlayCoreOnSuccessListener.cs" t="Include" />
+                  <e p="PlayServicesTask.cs" t="Include" />
+                  <e p="TaskOnFailureListener.cs" t="Include" />
+                  <e p="TaskOnSuccessListener.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+          <e p="com.google.play.review" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="Proguard" t="Include">
+              <e p="review.txt" t="Include" />
+            </e>
+            <e p="Runtime" t="Include">
+              <e p="Google.Play.Review.asmdef" t="Include" />
+              <e p="Plugins" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="Internal" t="Include">
+                  <e p="ReviewAsyncOperation.cs" t="Include" />
+                  <e p="ReviewPlayServiceTaskManager.cs" t="Include" />
+                </e>
+                <e p="PlayReviewInfo.cs" t="Include" />
+                <e p="ReviewErrorCode.cs" t="Include" />
+                <e p="ReviewManager.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="Android" t="Include" />
+          <e p="iOS" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="GameAnalytics" t="Include" />
+        </e>
+      </e>
+      <e p="Google.Android.AppBundle.Editor.csproj" t="IncludeRecursive" />
+      <e p="Google.Play.Common.csproj" t="IncludeRecursive" />
+      <e p="Google.Play.Core.csproj" t="IncludeRecursive" />
+      <e p="Google.Play.Review.csproj" t="IncludeRecursive" />
+      <e p="GoogleMobileAds.Editor.csproj" t="IncludeRecursive" />
+      <e p="IngameDebugConsole.Editor.csproj" t="IncludeRecursive" />
+      <e p="IngameDebugConsole.Runtime.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp/Bin" t="ExcludeRecursive" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/JetBrains/Rider2020.1/resharper-host/local/Transient/ReSharperHost/v201/SolutionCaches/_ArcadiaAdventureSDK.2098771295.00" t="ExcludeRecursive" />
+  </component>
+</project>
