@@ -528,6 +528,7 @@
         <e p="Resources" t="Include">
           <e p="GameAnalytics" t="Include" />
         </e>
+        <e p="TestSDK.cs" t="Include" />
       </e>
       <e p="Google.Android.AppBundle.Editor.csproj" t="IncludeRecursive" />
       <e p="Google.Play.Common.csproj" t="IncludeRecursive" />

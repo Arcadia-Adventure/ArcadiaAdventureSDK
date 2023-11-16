@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
-using GoogleMobileAds.Editor;
 #if gameanalytics_enabled
 using GameAnalyticsSDK;
 #endif
@@ -249,6 +248,13 @@ public class ArcadiaSdkManager : MonoBehaviour
             return;
         }
         RequestBannerAd();
+    }
+    public void HideBanner()
+    {
+	    if (bannerView != null)
+	    {
+		    bannerView.Hide();
+	    }
     }
     public void DestroyBannerAd()
     {
@@ -634,18 +640,47 @@ public static string GetAdmobAppID()
 #if UNITY_EDITOR
 		PlayerSettings.productName = myGameIds.gameName;
 		PlayerSettings.companyName = "Arcadia Adventure";
+		PlayerSettings.bundleVersion = GetDatedVersion();
 		if (GetPlatformName() == "Android")
 		{
+			PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
+			Debug.Log("Set IL2CPP Architecture");
 			PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, myGameIds.bundleId);
+			SetARM64TargetArchitecture();
 		}
 		else if (GetPlatformName() == "IOS")
 		{
 			PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.iOS, myGameIds.bundleId);
+
 		}
 		Ids = myGameIds;
 #endif
 	}
-	 static void GetIdByName()
+#if UNITY_EDITOR
+	public string GetDatedVersion()
+	{
+		// Get the current date and time
+		DateTime currentDate = DateTime.Now;
+
+		// Format the date as "yyyy.mm.dd"
+		string formattedDate = currentDate.ToString("yyyy.M.d");
+		return formattedDate;
+		// Print the formatted date
+	}
+	static void SetARM64TargetArchitecture()
+	{
+		// Get the current target architectures for Android
+		AndroidArchitecture targetArchitectures = PlayerSettings.Android.targetArchitectures;
+
+		// Set ARM64 as a target architecture
+		targetArchitectures |= AndroidArchitecture.ARM64;
+
+		// Apply the changes
+		PlayerSettings.Android.targetArchitectures = targetArchitectures;
+		Debug.Log("Set Arm64 Architecture");
+	}
+#endif
+	static void GetIdByName()
 	{
 		IDs[] adids = gameids.id.ToArray();
 		myGameIds = Array.Find(adids, id => id.platform == GetPlatformName());
