@@ -20,13 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38ac6fd4-119e-4a6a-a795-69588b4b0c9d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcadiaAdventureSDK/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcadiaSDK/SDK Scenes/Ad Splash.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcadiaSDK/SDK Scenes/Ad Splash.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcadiaSDK/SDK Scenes/game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcadiaSDK/SDK Scenes/game.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ArcadiaSDK/Script/ArcadiaSdkManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcadiaSDK/Script/ArcadiaSdkManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AndroidResolverDependencies.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +33,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/GoogleMobileAds/Editor/GoogleMobileAdsSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ArcadiaSDK/Editor/ArcadiaEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameAnalytics/Editor/GA_SettingsInspector.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ArcadiaSDK/Script/AA_AnalyticsManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -44,6 +41,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/ArcadiaSDK/Script/ArcadiaSdkManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GooglePlayPlugins/com.google.android.appbundle/Editor/Scripts/Internal/PlayServices/Logger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameAnalytics/Plugins/Playmaker/SendBusinessEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2F621C7F-B66D-4E12-9C96-2E5E88DF1E8B/49/0cf3900d/RequestConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GoogleMobileAds/Editor/ManifestProcessor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GooglePlayPlugins/com.google.play.core/Runtime/Scripts/Internal/TaskOnSuccessListener.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -51,6 +50,7 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/ArcadiaSDK/Script/AA_AnalyticsManager.cs" />
         <option value="$PROJECT_DIR$/Assets/TestSDK.cs" />
+        <option value="$PROJECT_DIR$/Assets/GoogleMobileAds/Editor/ManifestProcessor.cs" />
         <option value="$PROJECT_DIR$/Assets/ArcadiaSDK/Script/ArcadiaSdkManager.cs" />
       </list>
     </option>
@@ -96,6 +96,7 @@
       <updated>1699855191224</updated>
       <workItem from="1699855214272" duration="513000" />
       <workItem from="1700114261171" duration="2923000" />
+      <workItem from="1700120264909" duration="713000" />
     </task>
     <servers />
   </component>

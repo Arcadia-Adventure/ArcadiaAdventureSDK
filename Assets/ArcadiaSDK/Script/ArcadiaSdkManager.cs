@@ -9,7 +9,9 @@ using GoogleMobileAds.Common;
 using GameAnalyticsSDK;
 #endif
 
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+using GoogleMobileAds.Editor;
+using GoogleMobileAds;
 #endif
 
 
@@ -58,7 +60,7 @@ public class ArcadiaSdkManager : MonoBehaviour
 	[Header("-------- Enable/Disable Logs --------")]
 	public bool enableLogs = false;
     private Action interstitialCallBack, rewardedCallBack;
-	#endregion
+    #endregion
 	
 	//============================== Singleton_Region ============================== 
 	#region Singleton_Region
@@ -107,10 +109,7 @@ public class ArcadiaSdkManager : MonoBehaviour
 #elif UNITY_ANDROID
         //deviceIds.Add("75EF8D155528C04DACBBA6F36F433035");
 #endif
-
-        // Configure TagForChildDirectedTreatment and test device IDs.
-        string admobappID = Ids.admobAppId;
-
+		// Configure TagForChildDirectedTreatment and test device IDs.
 		RequestConfiguration requestConfiguration =
 			new RequestConfiguration.Builder()
 			.SetTagForChildDirectedTreatment(tagForChild)
