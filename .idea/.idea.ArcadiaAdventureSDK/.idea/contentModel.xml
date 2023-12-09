@@ -70,9 +70,9 @@
           </e>
           <e p="Script" t="Include">
             <e p="AA_AnalyticsManager.cs" t="Include" />
-            <e p="AdapterInfo.cs" t="Include" />
             <e p="ArcadiaSdkManager.cs" t="Include" />
             <e p="StoreReviewManager.cs" t="Include" />
+            <e p="TestSDK.cs" t="Include" />
           </e>
           <e p="SDK Scenes" t="Include" />
         </e>
@@ -528,7 +528,6 @@
         <e p="Resources" t="Include">
           <e p="GameAnalytics" t="Include" />
         </e>
-        <e p="TestSDK.cs" t="Include" />
       </e>
       <e p="Google.Android.AppBundle.Editor.csproj" t="IncludeRecursive" />
       <e p="Google.Play.Common.csproj" t="IncludeRecursive" />

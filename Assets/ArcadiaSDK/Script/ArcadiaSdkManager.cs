@@ -17,7 +17,6 @@ using GoogleMobileAds;
 
 public class ArcadiaSdkManager : MonoBehaviour 
 {
-	
 	//============================== Variables_Region ============================== 
 	#region Variables_Region
 	private static ArcadiaSdkManager _instance = null;
@@ -35,11 +34,12 @@ public class ArcadiaSdkManager : MonoBehaviour
     public BannerView bannerView;
     public InterstitialAd interstitialAd;
     public RewardedAd rewardedAd;
-
+    [Header("-------- v2023.12.10 --------")]
     public bool useTestIDs;
 
     public TagForChildDirectedTreatment tagForChild;
-    [Header("Banner")]
+    [Header("Banner")] 
+    public bool showBannerInStart = false;
     public AdPosition bannerAdPosition;
     public AdSize bannerAdSize;
 
@@ -180,7 +180,8 @@ public class ArcadiaSdkManager : MonoBehaviour
 		}
 		if (!removeAd|| myGameIds.bannerAdId.Length > 1)
 		{
-			RequestBannerAd();
+			if(showBannerInStart)
+				RequestBannerAd();
 		}
 	}
     #region BANNER ADS
@@ -458,6 +459,7 @@ public class ArcadiaSdkManager : MonoBehaviour
             PrintStatus("Reward not null");
             rewardedAd.Show((Reward reward) =>
             {
+	            rewardedCallBack?.Invoke();
                 //rewardAmount = (float)reward.Amount;
                 /*                if (OnrewardDelegate != null)
                                 {

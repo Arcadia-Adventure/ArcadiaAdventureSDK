@@ -12,7 +12,6 @@ using UnityEditor;
 public class ArcadiaEditor : EditorWindow
 {
 	[MenuItem("ArcadiaSDK/SDK Setup", false, 100)]
-
 	public static void Creat()
 	{
 		ArcadiaSdkManager ads = GameObject.FindObjectOfType<ArcadiaSdkManager>();
