@@ -9,11 +9,6 @@ using GoogleMobileAds.Common;
 using GameAnalyticsSDK;
 #endif
 
-#if UNITY_EDITOR
-using GoogleMobileAds.Editor;
-using GoogleMobileAds;
-#endif
-
 
 public class ArcadiaSdkManager : MonoBehaviour 
 {
@@ -36,6 +31,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     public RewardedAd rewardedAd;
     [Header("-------- v2023.12.10 --------")]
     public bool useTestIDs;
+    public bool showAvaiableUpdateInStart=true;
 
     public TagForChildDirectedTreatment tagForChild;
     [Header("Banner")] 
@@ -94,6 +90,8 @@ public class ArcadiaSdkManager : MonoBehaviour
 		LoadGameIds();
 		InitAdmob();
 		InternetCheckerInit();
+        if(showAvaiableUpdateInStart)
+        ShowAvailbleUpdate();
 	}
 	public void InitAdmob()
 	{
@@ -712,6 +710,20 @@ public static string GetAdmobAppID()
 			obj.RateUs();
 		}
 	}
+    public void ShowAvailbleUpdate()
+    {
+		UpdateManager obj = FindObjectOfType<UpdateManager>();
+		if (obj==null)
+		{
+			var updateManager = new GameObject();
+			obj=updateManager.AddComponent<UpdateManager>();
+			obj.ShowAvailbleUpdate();
+		}
+		else
+		{
+			obj.ShowAvailbleUpdate();
+		}
+    }
 	public void InternetCheckerInit()
 	{
 #if UNITY_EDITOR

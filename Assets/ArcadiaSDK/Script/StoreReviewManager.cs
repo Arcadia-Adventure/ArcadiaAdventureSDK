@@ -10,27 +10,28 @@ public class StoreReviewManager : MonoBehaviour
 {
 #if UNITY_ANDROID
     private ReviewManager _reviewManager;
-    private PlayReviewInfo _playReviewInfo;    
+    private PlayReviewInfo _playReviewInfo;
 #endif
 
 
-    
+
     public void RateUs()
     {
-        if (PlayerPrefs.GetInt("RateUs")==1)
+        if (PlayerPrefs.GetInt("RateUs") == 1)
             return;
-        
+
 #if UNITY_ANDROID
- _reviewManager = new ReviewManager();
+
+        _reviewManager = new ReviewManager();
         StartCoroutine(Review());
 #endif
-#if UNITY_IOS|| UNITY_IPHONE
+#if UNITY_IOS || UNITY_IPHONE
         UnityEngine.iOS.Device.RequestStoreReview();        
 #endif
-        
-        PlayerPrefs.SetInt("RateUs",1);
+
+        PlayerPrefs.SetInt("RateUs", 1);
     }
-    
+
 
     IEnumerator Review()
     {
@@ -44,10 +45,10 @@ public class StoreReviewManager : MonoBehaviour
             yield break;
         }
         _playReviewInfo = requestFlowOperation.GetResult();
-        
+
         var launchFlowOperation = _reviewManager.LaunchReviewFlow(_playReviewInfo);
         yield return launchFlowOperation;
-        _playReviewInfo = null; 
+        _playReviewInfo = null;
         if (launchFlowOperation.Error != ReviewErrorCode.NoError)
         {
             yield break;

@@ -39,6 +39,9 @@ public class TestSDK : MonoBehaviour
             case 9:
                 ArcadiaSdkManager.Agent.ShowRateUs();
                 break;
+            case 10:
+                ArcadiaSdkManager.Agent.ShowAvailbleUpdate();
+                break;
                 
         }
     }
