@@ -43,7 +43,7 @@ public class AA_AnalyticsManager : MonoBehaviour
     }
 
 
-    private void Start()
+    private void OnEnable()
     {
         InIt();
     }

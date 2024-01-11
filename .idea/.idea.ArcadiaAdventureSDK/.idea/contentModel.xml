@@ -73,6 +73,7 @@
             <e p="ArcadiaSdkManager.cs" t="Include" />
             <e p="StoreReviewManager.cs" t="Include" />
             <e p="TestSDK.cs" t="Include" />
+            <e p="UpdateManager.cs" t="Include" />
           </e>
           <e p="SDK Scenes" t="Include" />
         </e>
@@ -450,6 +451,39 @@
             </e>
             <e p="package.json" t="Include" />
           </e>
+          <e p="com.google.play.appupdate" t="Include">
+            <e p="Editor" t="Include">
+              <e p="Dependencies.xml" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="Proguard" t="Include">
+              <e p="app_update.txt" t="Include" />
+            </e>
+            <e p="Runtime" t="Include">
+              <e p="Google.Play.AppUpdate.asmdef" t="Include" />
+              <e p="Plugins" t="Include" />
+              <e p="Scripts" t="Include">
+                <e p="AppUpdateErrorCode.cs" t="Include" />
+                <e p="AppUpdateInfo.cs" t="Include" />
+                <e p="AppUpdateManager.cs" t="Include" />
+                <e p="AppUpdateOptions.cs" t="Include" />
+                <e p="AppUpdateRequest.cs" t="Include" />
+                <e p="AppUpdateStatus.cs" t="Include" />
+                <e p="AppUpdateType.cs" t="Include" />
+                <e p="Internal" t="Include">
+                  <e p="AppUpdateAsyncOperation.cs" t="Include" />
+                  <e p="AppUpdateHandler.cs" t="Include" />
+                  <e p="AppUpdateManagerInternal.cs" t="Include" />
+                  <e p="AppUpdateManagerPlayCore.cs" t="Include" />
+                  <e p="AppUpdatePlayCoreTranslator.cs" t="Include" />
+                  <e p="AppUpdateRequestImpl.cs" t="Include" />
+                  <e p="AppUpdateState.cs" t="Include" />
+                  <e p="AppUpdateStateListener.cs" t="Include" />
+                </e>
+                <e p="UpdateAvailability.cs" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="com.google.play.common" t="Include">
             <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
@@ -530,6 +564,7 @@
         </e>
       </e>
       <e p="Google.Android.AppBundle.Editor.csproj" t="IncludeRecursive" />
+      <e p="Google.Play.AppUpdate.csproj" t="IncludeRecursive" />
       <e p="Google.Play.Common.csproj" t="IncludeRecursive" />
       <e p="Google.Play.Core.csproj" t="IncludeRecursive" />
       <e p="Google.Play.Review.csproj" t="IncludeRecursive" />

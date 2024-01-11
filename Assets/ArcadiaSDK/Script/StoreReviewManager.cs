@@ -5,16 +5,12 @@ using UnityEngine;
 using Google.Play.Review;
 #endif
 
-
 public class StoreReviewManager : MonoBehaviour
 {
 #if UNITY_ANDROID
     private ReviewManager _reviewManager;
     private PlayReviewInfo _playReviewInfo;
 #endif
-
-
-
     public void RateUs()
     {
         if (PlayerPrefs.GetInt("RateUs") == 1)
