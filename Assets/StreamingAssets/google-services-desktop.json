@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318098927030",
+    "project_id": "test-646d1",
+    "storage_bucket": "test-646d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318098927030:android:f111900e85cd14574ca517",
+        "android_client_info": {
+          "package_name": "com.aa.arcadiaadventuresdk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU8ofhy7NKo4z8EKkXTXaW4r30Uzml1tA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

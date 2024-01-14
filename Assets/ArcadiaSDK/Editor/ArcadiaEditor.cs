@@ -43,7 +43,7 @@ public class ArcadiaEditor : EditorWindow
 	static void SDKConfig()
 	{
 		
-		AA_AnalyticsManager.SetGAIds();
+		GameAnalyticsManager.SetGAIds();
 		
 	
 		//pass ids here

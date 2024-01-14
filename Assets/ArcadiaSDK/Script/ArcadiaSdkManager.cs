@@ -30,7 +30,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     public BannerView bannerView;
     public InterstitialAd interstitialAd;
     public RewardedAd rewardedAd;
-    [Header("[v2023.12.10]")]
+    [Header("[v2024.1.13]")]
     public bool useTestIDs;
     public bool showAvaiableUpdateInStart = true;
 

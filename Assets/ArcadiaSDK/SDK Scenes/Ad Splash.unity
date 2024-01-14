@@ -678,6 +678,8 @@ GameObject:
   - component: {fileID: 2130949572}
   - component: {fileID: 2130949571}
   - component: {fileID: 2130949573}
+  - component: {fileID: 2130949575}
+  - component: {fileID: 2130949574}
   m_Layer: 0
   m_Name: ArcadiaSdkManager
   m_TagString: Untagged
@@ -744,5 +746,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62f94f3fd0b64982ba003b9ad21ed136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2130949574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130949570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e08163c61ccb41dabef9128731559c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2130949575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130949570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40370adc76cc947e7a5f115ef722b991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
