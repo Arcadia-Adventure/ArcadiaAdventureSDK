@@ -22,7 +22,7 @@ public class TestSDK : MonoBehaviour
                 ArcadiaSdkManager.Agent.ShowBanner();
                 break;
             case 4:
-                ArcadiaSdkManager.Agent.HideBanner();
+                ArcadiaSdkManager.Agent.HideBanner(true);
                 break;
             case 5:
                 ArcadiaSdkManager.Agent.DestroyBannerAd();

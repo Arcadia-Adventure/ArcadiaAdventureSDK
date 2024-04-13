@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using GameAnalyticsSDK;
 using GameAnalyticsSDK.Events;
 using GameAnalyticsSDK.Setup;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 public class GameAnalyticsManager : MonoBehaviour
 {
@@ -41,11 +41,8 @@ public class GameAnalyticsManager : MonoBehaviour
                 Destroy(this.gameObject);
         }
     }
-    void OnEnable()
-    {
-        InIt();
-    }
-    public void InIt()
+    public static UnityEvent<bool> OnInitialize;
+    public static void Initialize()
     {
         GameAnalytics.Initialize();
         GameAnalyticsILRD.SubscribeMaxImpressions();
@@ -66,6 +63,7 @@ public class GameAnalyticsManager : MonoBehaviour
 
     public static void AdTrackingAnalytics(String adType,String location)
     {
+
     }
     #region GAIDs
 

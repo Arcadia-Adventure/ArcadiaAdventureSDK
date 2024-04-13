@@ -5,6 +5,7 @@ using GameAnalyticsSDK;
 using GameAnalyticsSDK.Events;
 using GameAnalyticsSDK.Setup;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class AA_AnalyticsManager : MonoBehaviour
@@ -41,6 +42,20 @@ public class AA_AnalyticsManager : MonoBehaviour
                 Destroy(this.gameObject);
         }
     }
+
+    public UnityEvent<bool> onGameAnalyticsInitialize;
+    public UnityEvent<bool> onFirebaseInitialize;
+    public void OnEnable()
+    {
+        InitializeAnalytics();
+    }
+    public void InitializeAnalytics()
+    {
+        GameAnalyticsManager.OnInitialize=onGameAnalyticsInitialize;
+        FirebaseManager.onInitialize=onFirebaseInitialize;
+        GameAnalyticsManager.Initialize();
+        FirebaseManager.InitializeFirebase();
+    }
     public void GameStartAnalytics(int levelNo)
     {
         FirebaseManager.LogLevelStartEvent(levelNo);
@@ -55,5 +70,9 @@ public class AA_AnalyticsManager : MonoBehaviour
     {
         FirebaseManager.LogLevelCompleteEvent(levelNo);
         GameAnalyticsManager.GameCompleteAnalytics(levelNo);
+    }
+    public void NewAdEvent()
+    {
+
     }
 }

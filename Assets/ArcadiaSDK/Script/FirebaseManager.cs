@@ -3,6 +3,7 @@ using Firebase;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
 using Firebase.Extensions;
+using UnityEngine.Events;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -14,15 +15,15 @@ public class FirebaseManager : MonoBehaviour
         {
             Agent = this;
             DontDestroyOnLoad(gameObject);
-            InitializeFirebase();
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    FirebaseApp app;
-    private void InitializeFirebase()
+    public static UnityEvent<bool> onInitialize;
+    static FirebaseApp app;
+    public static void InitializeFirebase()
     {
       FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(
         previousTask => 
@@ -34,8 +35,11 @@ public class FirebaseManager : MonoBehaviour
             app = Firebase.FirebaseApp.DefaultInstance;
             // Set the recommended Crashlytics uncaught exception behavior.
             Crashlytics.ReportUncaughtExceptionsAsFatal = true;
-          } else 
+            onInitialize.Invoke(true);
+          } 
+          else 
           {
+            onInitialize.Invoke(false);
             UnityEngine.Debug.LogError(
               $"Could not resolve all Firebase dependencies: {dependencyStatus}\n" +
               "Firebase Unity SDK is not safe to use here");
