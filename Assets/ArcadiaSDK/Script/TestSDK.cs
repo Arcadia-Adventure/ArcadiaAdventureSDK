@@ -16,13 +16,13 @@ public class TestSDK : MonoBehaviour
                 ArcadiaSdkManager.Agent.ShowInterstitialAd();
                 break;
             case 2:
-                ArcadiaSdkManager.Agent.ShowAppOpenAd();
+                //ArcadiaSdkManager.Agent;
                 break;
             case 3:
                 ArcadiaSdkManager.Agent.ShowBanner();
                 break;
             case 4:
-                ArcadiaSdkManager.Agent.HideBanner(true);
+                ArcadiaSdkManager.Agent.HideBanner();
                 break;
             case 5:
                 ArcadiaSdkManager.Agent.DestroyBannerAd();

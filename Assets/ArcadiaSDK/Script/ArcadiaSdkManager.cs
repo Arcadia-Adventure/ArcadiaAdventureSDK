@@ -6,10 +6,6 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
-
-#if gameanalytics_enabled
-using GameAnalyticsSDK;
-#endif
 public class ArcadiaSdkManager : MonoBehaviour
 {
     //============================== Variables_Region ============================== 
@@ -23,11 +19,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         LevelComplete, LevelFail, SelectionScreen, BackButton, HomeButton, PauseButton
     }
-    private readonly TimeSpan APPOPEN_TIMEOUT = TimeSpan.FromHours(4);
-    private DateTime appOpenExpireTime;
-    private AppOpenAd appOpenAd;
-    public BannerView bannerView;
-    public InterstitialAd interstitialAd;
+
     public RewardedAd rewardedAd;
     [Header("[v2024.1.13]")]
     public bool removeAds = false;
@@ -54,10 +46,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     [Space(10)]
     [Header("-------- Enable/Disable Logs --------")]
     public bool enableLogs = false;
-    private Action interstitialCallBack;
     private Action<int> rewardedCallBack;
-    public Action<bool> OnBannerActive;
-    internal bool bannerActive;
     #endregion
 
     //============================== Singleton_Region ============================== 
@@ -95,10 +84,6 @@ public class ArcadiaSdkManager : MonoBehaviour
         InternetCheckerInit();
         if (showAvaiableUpdateInStart)
             ShowAvailbleUpdate();
-    }
-    public void OnEnable()
-    {
-        OnBannerActive += (bool status) => bannerActive = status;
     }
     public void InitAdmob()
     {
@@ -140,8 +125,6 @@ public class ArcadiaSdkManager : MonoBehaviour
             LoadAds();
             LoadNextScene();
         });
-        if (InternetRequired)
-            AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
         if (Application.internetReachability != NetworkReachability.ReachableViaLocalAreaNetwork && Application.internetReachability != NetworkReachability.ReachableViaCarrierDataNetwork)
         {
             LoadNextScene();
@@ -159,16 +142,34 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         removeAds=true;
         PlayerPrefs.SetInt(nameof(removeAds),1);
-        DestroyBannerAd();
+        BannerAdController.agent.DestroyBannerAd();
     }
     private AdRequest CreateAdRequest()
     {
         return new AdRequest();
     }
-    public void OnAppStateChanged(AppState state)
+
+    public void LoadAds()
+    {
+        RewardedAdController.agent.RequestAndLoadRewardedAd();
+        if (!removeAds && myGameIds.interstitialAdId.Length > 1)
+        {
+            InterstitialAdController.agent.RequestAndLoadInterstitialAd(null,useTestIDs);
+        }
+        if (!removeAds && myGameIds.appOpenAdId.Length > 1)
+        {
+            AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
+        }
+        if (!removeAds && myGameIds.bannerAdId.Length > 1)
+        {
+            if (showBannerInStart)
+                BannerAdController.agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
+        }
+    }
+    void OnAppStateChanged(AppState state)
     {
         // Display the app open ad when the app is foregrounded.
-        PrintStatus("App State is " + state);
+        ArcadiaSdkManager.PrintStatus("App State is " + state);
         if (removeAds)
         {
             return;
@@ -176,606 +177,43 @@ public class ArcadiaSdkManager : MonoBehaviour
         // OnAppStateChanged is not guaranteed to execute on the Unity UI thread.
         MobileAdsEventExecutor.ExecuteInUpdate(() =>
         {
-            if (state == AppState.Foreground && myGameIds.appOpenAdId.Length > 1)
+            if (state == AppState.Foreground && ArcadiaSdkManager.myGameIds.appOpenAdId.Length > 1)
             {
-                ShowAppOpenAd();
+                AppOpenAdController.agent.ShowAppOpenAd();
             }
         });
     }
-    public void LoadAds()
+    public void ShowBanner()
     {
-        RequestAndLoadRewardedAd();
-        if (!removeAds && myGameIds.interstitialAdId.Length > 1)
-        {
-            RequestAndLoadInterstitialAd();
-        }
-        if (!removeAds && myGameIds.appOpenAdId.Length > 1)
-        {
-            RequestAndLoadAppOpenAd();
-
-        }
-        if (!removeAds && myGameIds.bannerAdId.Length > 1)
-        {
-            if (showBannerInStart)
-                RequestBannerAd();
-        }
+        if(removeAds)return;
+        BannerAdController.agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
     }
-    #region BANNER ADS
-    public void RequestBannerAd()
+    public void HideBanner()
     {
-        PrintStatus("Requesting Banner ad.");
-
-        // These ad units are configured to always serve test ads.
-        string adUnitId = myGameIds.bannerAdId;
-        if (useTestIDs)
-        {
-
-#if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/6300978111";
-#elif UNITY_IPHONE
-         adUnitId = "ca-app-pub-3940256099942544/2934735716";
-#else
-        adUnitId = "unexpected_platform";
-#endif
-        }
-        // Clean up banner before reusing
-        if (bannerView != null)
-        {
-            bannerView.Destroy();
-        }
-#if gameanalytics_enabled
-
-        if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Request, GAAdType.Banner, "undefine", "undefine");
-#endif
-        // Create a 320x50 banner at top of the screen
-        switch (bannerType)
-        {
-            case BannerType.AdoptiveBanner:
-                bannerView = new BannerView(adUnitId, AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth), bannerAdPosition);
-                break;
-            case BannerType.SmartBanner:
-                bannerView = new BannerView(adUnitId, AdSize.SmartBanner, bannerAdPosition);
-                break;
-            case BannerType.Banner:
-                bannerView = new BannerView(adUnitId, AdSize.Banner, bannerAdPosition);
-                break;
-
-            case BannerType.IABBanner:
-                bannerView = new BannerView(adUnitId, AdSize.IABBanner, bannerAdPosition);
-                break;
-
-            case BannerType.Leaderboard:
-                bannerView = new BannerView(adUnitId, AdSize.Leaderboard, bannerAdPosition);
-                break;
-
-            case BannerType.MediumRectangle:
-                bannerView = new BannerView(adUnitId, AdSize.MediumRectangle, bannerAdPosition);
-                break;
-        }
-        // Add Event Handlers
-        bannerView.OnBannerAdLoaded += () =>
-        {
-#if gameanalytics_enabled
-            if (GameAnalytics.Initialized)
-            {
-                GameAnalytics.NewAdEvent(GAAdAction.Loaded, GAAdType.Banner, bannerView.GetResponseInfo().GetLoadedAdapterResponseInfo().AdSourceName, "undefine");
-                GameAnalyticsILRD.SubscribeAdMobImpressions(adUnitId, bannerView);
-            }
-#endif
-            PrintStatus("Banner ad loaded.");
-            OnBannerActive.Invoke(true);
-        };
-        bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
-        {
-#if gameanalytics_enabled
-            GameAnalytics.NewErrorEvent(GAErrorSeverity.Info, error.GetMessage());
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Banner, "undefine", "undefine", GAAdError.InvalidRequest);
-#endif
-            PrintStatus("Banner ad failed to load with error: " + error.GetMessage());
-        };
-        bannerView.OnAdImpressionRecorded += () =>
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Show, GAAdType.Banner, "undefine", "undefine");
-#endif
-        };
-        bannerView.OnAdFullScreenContentOpened += () =>
-        {
-            PrintStatus("Banner ad opening.");
-        };
-        bannerView.OnAdFullScreenContentClosed += () =>
-        {
-            PrintStatus("Banner ad closed.");
-        };
-        bannerView.OnAdPaid += (AdValue adValue) =>
-        {
-            Dictionary<string, object> paidData = new Dictionary<string, object>();
-            paidData.Add(adValue.CurrencyCode, adValue.Value);
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Undefined, GAAdType.Banner, "undefine", "undefine", paidData, true);
-#endif
-            string msg = string.Format("{0} (currency: {1}, value: {2}",
-                                        "Banner ad received a paid event.",
-                                        adValue.CurrencyCode,
-                                        adValue.Value);
-            PrintStatus(msg);
-        };
-
-        // Load a banner ad
-        bannerView.LoadAd(CreateAdRequest());
-    }
-    public void ShowBanner(bool showNew=false)
-    {
-        if (removeAds)
-        {
-            return;
-        }
-        if(showNew)
-        RequestBannerAd();
-        else
-        HideBanner(false);
-    }
-    public void HideBanner(bool hide)
-    {
-        OnBannerActive.Invoke(!hide);
-        if (bannerView != null)
-        {
-            if(hide)
-            {
-            bannerView.Hide();
-            }
-            else
-            {
-            bannerView.Show();
-            }
-        }
-        else if(!hide)
-        {
-            RequestBannerAd();
-        }
+        BannerAdController.agent.HideBanner();
     }
     public void DestroyBannerAd()
     {
-        if (bannerView != null)
-        {
-            OnBannerActive.Invoke(false);
-            bannerView.Destroy();
-        }
+        BannerAdController.agent.DestroyBannerAd();
     }
-
-    #endregion
-
-    #region INTERSTITIAL ADS
-
-    public void RequestAndLoadInterstitialAd(Action<bool> OnLoad=null)
+    public void ShowInterstitialAd(Action successCallBack = null, Action failCallBack=null)
     {
-
-        PrintStatus("Requesting Interstitial ad.");
-#if gameanalytics_enabled
-
-        if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Request, GAAdType.Interstitial, "undefine", "undefine");
-#endif
-        string adUnitId = myGameIds.interstitialAdId;
-        if (useTestIDs)
-        {
-#if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/1033173712";
-#elif UNITY_IPHONE
-         adUnitId = "ca-app-pub-3940256099942544/4411468910";
-#else
-         adUnitId = "unexpected_platform";
-#endif
-        }
-        // Clean up interstitial before using it
-        if (interstitialAd != null)
-        {
-            interstitialAd.Destroy();
-        }
-
-        // Load an interstitial ad
-        InterstitialAd.Load(adUnitId, CreateAdRequest(),
-            (InterstitialAd ad, LoadAdError loadError) =>
-            {
-                if (loadError != null)
-                {
-#if gameanalytics_enabled
-                    GameAnalytics.NewErrorEvent(GAErrorSeverity.Info, loadError.GetMessage());
-                    if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Interstitial, "undefine", "undefine", GAAdError.NoFill);
-#endif
-                    PrintStatus("Interstitial ad failed to load with error: " +
-                        loadError.GetMessage());
-                        OnLoad?.Invoke(false);
-                    return;
-                }
-                else if (ad == null)
-                {
-#if gameanalytics_enabled
-
-                    if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Interstitial, "undefine", "undefine", GAAdError.InternalError);
-#endif
-                    PrintStatus("Interstitial ad failed to load.");
-                    OnLoad?.Invoke(false);
-                    return;
-                }
-                PrintStatus("Interstitial ad loaded.");
-                interstitialAd = ad;
-                OnLoad?.Invoke(true);
-#if gameanalytics_enabled
-
-                if (GameAnalytics.Initialized)
-                {
-                    GameAnalytics.NewAdEvent(GAAdAction.Loaded, GAAdType.Interstitial, ad.GetResponseInfo().GetLoadedAdapterResponseInfo().AdSourceName, "undefine");
-                    GameAnalyticsILRD.SubscribeAdMobImpressions(adUnitId, interstitialAd);
-                }
-#endif
-                RegisterEventHandlers(interstitialAd);
-                RegisterReloadHandler(interstitialAd);
-            });
-    }
-    private void RegisterEventHandlers(InterstitialAd interstitialAd)
-    {
-        // Raised when the ad is estimated to have earned money.
-        interstitialAd.OnAdPaid += (AdValue adValue) =>
-        {
-            Dictionary<string, object> paidData = new Dictionary<string, object>();
-            paidData.Add(adValue.CurrencyCode, adValue.Value);
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Undefined, GAAdType.Interstitial, "undefine", "undefine", paidData, true);
-#endif
-            PrintStatus(String.Format("Interstitial ad paid {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
-        };
-        // Raised when an impression is recorded for an ad.
-        interstitialAd.OnAdImpressionRecorded += () =>
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Show, GAAdType.Interstitial, "undefine", "undefine");
-#endif
-            PrintStatus("Interstitial ad recorded an impression.");
-        };
-        // Raised when a click is recorded for an ad.
-        interstitialAd.OnAdClicked += () =>
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Clicked, GAAdType.Interstitial, "undefine", "undefine");
-#endif
-            PrintStatus("Interstitial ad was clicked.");
-        };
-        // Raised when an ad opened full screen content.
-        interstitialAd.OnAdFullScreenContentOpened += () =>
-        {
-            PrintStatus("Interstitial ad full screen content opened.");
-        };
-    }
-    private void RegisterReloadHandler(InterstitialAd interstitialAd)
-    {
-        // Raised when the ad closed full screen content.
-        interstitialAd.OnAdFullScreenContentClosed += () =>
-        {
-            // Reload the ad so that we can show another as soon as possible.
-            if(preCache)RequestAndLoadInterstitialAd();
-            interstitialCallBack?.Invoke();
-            ShowLoadingScreen(false);
-            PrintStatus("Interstitial ad full screen content closed.");
-        };
-        // Raised when the ad failed to open full screen content.
-        interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            // Reload the ad so that we can show another as soon as possible.
-            if(preCache)RequestAndLoadInterstitialAd();
-#if gameanalytics_enabled
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Interstitial, "undefine", "undefine", GAAdError.InvalidRequest);
-#endif
-            Debug.LogError("Interstitial ad failed to open full screen content " + "with error : " + error);
-        };
-    }
-
-    public void ShowInterstitialAd(Action _interstitialCallBack = null)
-    {
-
         if (removeAds)
         {
             return;
         }
-        interstitialCallBack = _interstitialCallBack;
-        if (interstitialAd != null && interstitialAd.CanShowAd())
-        {
-            interstitialAd.Show();
-        }
-        else
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Interstitial, "undefine", "undefine", GAAdError.UnableToPrecache);
-#endif
-            PrintStatus("Interstitial ad is not ready yet.");
-            if(!preCache)ShowLoadingScreen(true);
-            RequestAndLoadInterstitialAd((bool onload)=>
-            {
-                if(!preCache)
-                {
-                    interstitialAd.Show();
-                }
-            });
-        }
+        ShowLoadingScreen(true);
+        successCallBack+=()=>ShowLoadingScreen(false);
+        failCallBack+=()=>ShowLoadingScreen(false);
+        InterstitialAdController.agent.ShowInterstitialAd(successCallBack,failCallBack,useTestIDs);
     }
-
-    public void DestroyInterstitialAd()
+    public void ShowRewardedAd(Action<int> successCallBack = null, Action failCallBack=null)
     {
-        if (interstitialAd != null)
-        {
-            interstitialAd.Destroy();
-        }
+        ShowLoadingScreen(true);
+        successCallBack+=(int reward)=>ShowLoadingScreen(false);
+        failCallBack+=()=>ShowLoadingScreen(false);
+        RewardedAdController.agent.ShowRewardedAd(successCallBack,failCallBack,useTestIDs);
     }
-
-    #endregion
-    #region REWARDED ADS
-
-    public void RequestAndLoadRewardedAd(Action<bool> Onload = null)
-    {
-        PrintStatus("Requesting Rewarded ad.");
-#if gameanalytics_enabled
-        if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Request, GAAdType.RewardedVideo, "undefine", "undefine");
-#endif
-        string adUnitId = myGameIds.rewardedVideoAdId;
-        if (useTestIDs)
-        {
-#if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/5224354917";
-#elif UNITY_IPHONE
-        adUnitId = "ca-app-pub-3940256099942544/1712485313";
-#else
-        adUnitId = "unexpected_platform";
-#endif
-        }
-        // create new rewarded ad instance
-        RewardedAd.Load(adUnitId, CreateAdRequest(),
-            (RewardedAd ad, LoadAdError loadError) =>
-            {
-                if (loadError != null)
-                {
-#if gameanalytics_enabled
-                    GameAnalytics.NewErrorEvent(GAErrorSeverity.Info, loadError.GetMessage());
-                    if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.RewardedVideo, "undefine", "undefine", GAAdError.NoFill);
-#endif
-                    PrintStatus("Rewarded ad failed to load with error: " + loadError.GetMessage());
-                    Onload?.Invoke(false);
-                    return;
-                }
-                else if (ad == null)
-                {
-#if gameanalytics_enabled
-
-                    if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.RewardedVideo, "undefine", "undefine", GAAdError.InternalError);
-#endif
-                    PrintStatus("Rewarded ad failed to load.");
-                    Onload?.Invoke(false);
-                    return;
-                }
-                PrintStatus("Rewarded ad loaded.");
-                rewardedAd = ad;
-                Onload?.Invoke(true);
-#if gameanalytics_enabled
-                if (GameAnalytics.Initialized)
-                {
-                    GameAnalytics.NewAdEvent(GAAdAction.Loaded, GAAdType.RewardedVideo, ad.GetResponseInfo().GetLoadedAdapterResponseInfo().AdSourceName, "undefine");
-                    GameAnalyticsILRD.SubscribeAdMobImpressions(adUnitId, rewardedAd);
-                }
-#endif
-                RegisterEventHandlers(rewardedAd);
-                RegisterReloadHandler(rewardedAd);
-            });
-    }
-    private void RegisterEventHandlers(RewardedAd ad)
-    {
-        // Raised when the ad is estimated to have earned money.
-        ad.OnAdPaid += (AdValue adValue) =>
-        {
-            Dictionary<string, object> paidData = new Dictionary<string, object>();
-            paidData.Add(adValue.CurrencyCode, adValue.Value);
-#if gameanalytics_enabled
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Undefined, GAAdType.RewardedVideo, "undefine", "undefine", paidData, true);
-#endif
-            PrintStatus(String.Format("Rewarded ad paid {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
-        };
-        // Raised when an impression is recorded for an ad.
-        ad.OnAdImpressionRecorded += () =>
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Show, GAAdType.RewardedVideo, "undefine", "undefine");
-#endif
-            PrintStatus("Rewarded ad recorded an impression.");
-        };
-        // Raised when a click is recorded for an ad.
-        ad.OnAdClicked += () =>
-        {
-#if gameanalytics_enabled
-
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.Clicked, GAAdType.RewardedVideo, "undefine", "undefine");
-#endif
-            PrintStatus("Rewarded ad was clicked.");
-        };
-        // Raised when an ad opened full screen content.
-        ad.OnAdFullScreenContentOpened += () =>
-        {
-            PrintStatus("Rewarded ad full screen content opened.");
-        };
-    }
-    private void RegisterReloadHandler(RewardedAd ad)
-    {
-        // Raised when the ad closed full screen content.
-        ad.OnAdFullScreenContentClosed += () =>
-        {
-            ShowLoadingScreen(false);
-            // Reload the ad so that we can show another as soon as possible.
-            if(preCache)RequestAndLoadRewardedAd();
-        };
-        // Raised when the ad failed to open full screen content.
-        ad.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            // Reload the ad so that we can show another as soon as possible.
-            if(preCache)RequestAndLoadRewardedAd();
-#if gameanalytics_enabled
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.RewardedVideo, "undefine", "undefine", GAAdError.InvalidRequest);
-#endif
-            rewardedCallBack?.Invoke(0);
-            Debug.LogError("Rewarded ad failed to open full screen content " + "with error : " + error);
-        };
-    }
-    public void ShowRewardedAd(Action<int> rewardSuccess = null, Action noVideoAvailable = null)
-    {
-        rewardedCallBack = rewardSuccess;
-        if (rewardedAd != null && rewardedAd.CanShowAd())
-        {
-            rewardedAd.Show(OnRewardComplete);
-        }
-        else
-        {
-#if gameanalytics_enabled
-            if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.RewardedVideo, "undefine", "undefine", GAAdError.UnableToPrecache);
-#endif
-            noVideoAvailable?.Invoke();
-            PrintStatus("Rewarded ad is not ready yet.");
-            if(!preCache)ShowLoadingScreen(true);
-            RequestAndLoadRewardedAd((bool isLoaded) =>
-            {
-                if (isLoaded)
-                {
-                    if (!preCache)
-                    {
-                        rewardedAd.Show(OnRewardComplete);
-                    }
-                }
-            });
-        }
-    }
-    public void OnRewardComplete(Reward reward)
-    {
-#if gameanalytics_enabled
-        if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.RewardReceived, GAAdType.RewardedVideo, "undefine", "undefine");
-#endif
-        rewardedCallBack?.Invoke((int)reward.Amount);
-        PrintStatus("Rewarded ad granted a reward: " + reward.Amount);
-    }
-    #endregion
-
-    #region APPOPEN ADS
-
-    public bool IsAppOpenAdAvailable
-    {
-        get
-        {
-            return (appOpenAd != null
-                    && appOpenAd.CanShowAd()
-                    && DateTime.Now < appOpenExpireTime);
-        }
-    }
-
-    public void RequestAndLoadAppOpenAd()
-    {
-        PrintStatus("Requesting App Open ad.");
-        string adUnitId = myGameIds.appOpenAdId;
-        if (useTestIDs)
-        {
-
-#if UNITY_ANDROID
-            adUnitId = "ca-app-pub-3940256099942544/3419835294";
-#elif UNITY_IPHONE
-         adUnitId = "ca-app-pub-3940256099942544/5662855259";
-#else
-         adUnitId = "unexpected_platform";
-#endif
-        }
-        // destroy old instance.
-        if (appOpenAd != null)
-        {
-            DestroyAppOpenAd();
-        }
-
-        // Create a new app open ad instance.
-        AppOpenAd.Load(adUnitId, CreateAdRequest(),
-            (AppOpenAd ad, LoadAdError loadError) =>
-            {
-                if (loadError != null)
-                {
-                    PrintStatus("App open ad failed to load with error: " +
-                        loadError.GetMessage());
-                    return;
-                }
-                else if (ad == null)
-                {
-                    PrintStatus("App open ad failed to load.");
-                    return;
-                }
-
-                PrintStatus("App Open ad loaded. Please background the app and return.");
-                this.appOpenAd = ad;
-                this.appOpenExpireTime = DateTime.Now + APPOPEN_TIMEOUT;
-
-                ad.OnAdFullScreenContentOpened += () =>
-                {
-                    PrintStatus("App open ad opened.");
-                };
-                ad.OnAdFullScreenContentClosed += () =>
-                {
-                    PrintStatus("App open ad closed.");
-                };
-                ad.OnAdImpressionRecorded += () =>
-                {
-                    PrintStatus("App open ad recorded an impression.");
-                };
-                ad.OnAdClicked += () =>
-                {
-                    PrintStatus("App open ad recorded a click.");
-                };
-                ad.OnAdFullScreenContentFailed += (AdError error) =>
-                {
-                    PrintStatus("App open ad failed to show with error: " +
-                        error.GetMessage());
-                };
-                ad.OnAdPaid += (AdValue adValue) =>
-                {
-                    string msg = string.Format("{0} (currency: {1}, value: {2}",
-                                               "App open ad received a paid event.",
-                                               adValue.CurrencyCode,
-                                               adValue.Value);
-                    PrintStatus(msg);
-                };
-            });
-    }
-
-    public void DestroyAppOpenAd()
-    {
-        if (this.appOpenAd != null)
-        {
-            this.appOpenAd.Destroy();
-            this.appOpenAd = null;
-        }
-    }
-
-    public void ShowAppOpenAd()
-    {
-
-        if (!IsAppOpenAdAvailable)
-        {
-            RequestAndLoadAppOpenAd();
-            return;
-        }
-        appOpenAd.Show();
-        RequestAndLoadAppOpenAd();
-    }
-
-    #endregion
-
     public void ShowLoadingScreen(bool active)
     {
         if(active)
@@ -795,7 +233,6 @@ public class ArcadiaSdkManager : MonoBehaviour
         loadingScreen.SetActive(true);
         yield return new WaitForSeconds(5);
         loadingScreen.SetActive(false);
-
     }
     #region AD INSPECTOR
 
@@ -817,9 +254,9 @@ public class ArcadiaSdkManager : MonoBehaviour
     }
 
     #endregion
-
-    private static void PrintStatus(string message)
+    public static void PrintStatus(string message)
     {
+        if(ArcadiaSdkManager.Agent.enableLogs)
         print(message);
     }
     #endregion
@@ -864,7 +301,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         // Get the current date and time
         DateTime currentDate = DateTime.Now;
         // Format the date as "yyyy.mm.dd"
-        string formattedDate = currentDate.ToString("yyyy.M.d");
+        string formattedDate = currentDate.ToString("yy.M.d");
         return formattedDate;
         // Print the formatted date
     }
@@ -945,6 +382,20 @@ public class ArcadiaSdkManager : MonoBehaviour
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 [Serializable]

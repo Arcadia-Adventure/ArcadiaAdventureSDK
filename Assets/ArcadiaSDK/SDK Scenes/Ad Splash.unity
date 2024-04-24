@@ -979,7 +979,7 @@ MonoBehaviour:
     rewardedVideoAdId: ca-app-pub-3940256099942544/5224354917
     gameKey_GameAnaytics: 2cdedb4c4be3969f0b55026347bcaa08
     secretKey_GameAnaytics: cdea76d46957e5a05b56cde39326344ccc627496
-  enableLogs: 1
+  enableLogs: 0
 --- !u!4 &2130949572
 Transform:
   m_ObjectHideFlags: 0

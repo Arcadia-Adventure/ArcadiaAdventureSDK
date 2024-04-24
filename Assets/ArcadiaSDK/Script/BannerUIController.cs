@@ -20,13 +20,13 @@ public class BannerUIController : MonoBehaviour
     }
     private void OnEnable()
     {
-        AdjustUIForBanner(ArcadiaSdkManager.Agent.bannerActive);
-        ArcadiaSdkManager.Agent.OnBannerActive += AdjustUIForBanner;
+        //AdjustUIForBanner(ArcadiaSdkManager.Agent.bannerActive);
+        //ArcadiaSdkManager.Agent.OnBannerActive += AdjustUIForBanner;
     }
 
     private void OnDisable()
     {
-        ArcadiaSdkManager.Agent.OnBannerActive -= AdjustUIForBanner;
+        //ArcadiaSdkManager.Agent.OnBannerActive -= AdjustUIForBanner;
     }
     public void AdjustUIForBanner(bool active)
     {
@@ -34,8 +34,8 @@ public class BannerUIController : MonoBehaviour
         {
             //uiPanel.offsetMax=Vector2.up*-ArcadiaSdkManager.Agent.bannerView.GetHeightInPixels();
             //uiPanel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,initialSize.y - ArcadiaSdkManager.Agent.bannerView.GetHeightInPixels());
-            if(uiPanel.sizeDelta==initialSize&&ArcadiaSdkManager.Agent.bannerView!=null)
-            uiPanel.sizeDelta = new Vector2(initialSize.x, initialSize.y - ArcadiaSdkManager.Agent.bannerView.GetHeightInPixels());
+            //if(uiPanel.sizeDelta==initialSize&&ArcadiaSdkManager.Agent.bannerView!=null)
+            //uiPanel.sizeDelta = new Vector2(initialSize.x, initialSize.y - ArcadiaSdkManager.Agent.bannerView.GetHeightInPixels());
         }
         else
         uiPanel.sizeDelta = initialSize;
