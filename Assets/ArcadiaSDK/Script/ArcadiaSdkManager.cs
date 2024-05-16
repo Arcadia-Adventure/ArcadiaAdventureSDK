@@ -142,7 +142,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         removeAds=true;
         PlayerPrefs.SetInt(nameof(removeAds),1);
-        BannerAdController.agent.DestroyBannerAd();
+        BannerAdController.Agent.DestroyBannerAd();
     }
     private AdRequest CreateAdRequest()
     {
@@ -163,7 +163,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         if (!removeAds && myGameIds.bannerAdId.Length > 1)
         {
             if (showBannerInStart)
-                BannerAdController.agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
+                BannerAdController.Agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
         }
     }
     void OnAppStateChanged(AppState state)
@@ -186,15 +186,15 @@ public class ArcadiaSdkManager : MonoBehaviour
     public void ShowBanner()
     {
         if(removeAds)return;
-        BannerAdController.agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
+        BannerAdController.Agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
     }
     public void HideBanner()
     {
-        BannerAdController.agent.HideBanner();
+        BannerAdController.Agent.HideBanner();
     }
     public void DestroyBannerAd()
     {
-        BannerAdController.agent.DestroyBannerAd();
+        BannerAdController.Agent.DestroyBannerAd();
     }
     public void ShowInterstitialAd(Action successCallBack = null, Action failCallBack=null)
     {

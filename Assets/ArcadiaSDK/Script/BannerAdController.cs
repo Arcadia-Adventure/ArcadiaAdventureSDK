@@ -16,14 +16,14 @@ using GameAnalyticsSDK;
 public class BannerAdController : MonoBehaviour
 {
     private static BannerAdController _agent;
-    public static BannerAdController agent
+    public static BannerAdController Agent
     {
         get
         {
             if(_agent == null)
             {
                 _agent = new GameObject(nameof(BannerAdController)).AddComponent<BannerAdController>();
-                DontDestroyOnLoad(agent.gameObject);
+                DontDestroyOnLoad(Agent.gameObject);
             }
 
             return _agent;
@@ -34,7 +34,9 @@ public class BannerAdController : MonoBehaviour
     {
         _agent = this;
     }
-    private BannerView bannerView;
+    public BannerView bannerView;
+    public bool isShowing;
+    public Action<bool> OnShow;
 
     public void RequestBannerAd(BannerType bannerType, AdPosition adPosition, bool useTestIDs = false)
     {
@@ -90,6 +92,7 @@ public class BannerAdController : MonoBehaviour
         // Add Event Handlers
         bannerView.OnBannerAdLoaded += () =>
         {
+            OnBannerShow(true);
 #if gameanalytics_enabled
             if (GameAnalytics.Initialized)
             {
@@ -101,6 +104,7 @@ public class BannerAdController : MonoBehaviour
         };
         bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
         {
+            OnBannerShow(false);
 #if gameanalytics_enabled
             GameAnalytics.NewErrorEvent(GAErrorSeverity.Info, error.GetMessage());
             if (GameAnalytics.Initialized) GameAnalytics.NewAdEvent(GAAdAction.FailedShow, GAAdType.Banner, "undefine", "undefine", GAAdError.InvalidRequest);
@@ -143,20 +147,33 @@ public class BannerAdController : MonoBehaviour
     public void ShowBanner(BannerType bannerType, AdPosition adPosition, bool useTestIDs)
     {
         if (bannerView != null)
+        {
+            OnBannerShow(true);
             bannerView.Show();
+        }
         else
             RequestBannerAd(bannerType,adPosition,useTestIDs);
     }
     public void HideBanner()
     {
         if (bannerView != null)
+        {
+            OnBannerShow(false);
             bannerView.Hide();
+        }
     }
     public void DestroyBannerAd()
     {
         if (bannerView != null)
         {
+            OnBannerShow(false);
             bannerView.Destroy();
+            bannerView=null;
         }
+    }
+    void OnBannerShow(bool show)
+    {
+        isShowing=show;
+        OnShow.Invoke(show);
     }
 }
