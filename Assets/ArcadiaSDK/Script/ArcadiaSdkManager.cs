@@ -34,7 +34,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     public AdPosition bannerAdPosition = AdPosition.Top;
     public BannerType bannerType = BannerType.AdoptiveBanner;
     [Header("Ads Setting")]
-    public TagForChildDirectedTreatment tagForChild;
+    public TagForChildDirectedTreatment tagForChildDirectedTreatment;
+    public TagForUnderAgeOfConsent tagForUnderAgeOfConsent;
     public GameObject loadingScreen;
     private static GameIDs gameids = new GameIDs();
 
@@ -99,7 +100,9 @@ public class ArcadiaSdkManager : MonoBehaviour
 #endif
         // Configure TagForChildDirectedTreatment and test device IDs.
         RequestConfiguration requestConfiguration =
-            new RequestConfiguration.Builder().SetTagForChildDirectedTreatment(tagForChild).SetTestDeviceIds(deviceIds).build();
+            new RequestConfiguration();
+            requestConfiguration.TagForChildDirectedTreatment=tagForChildDirectedTreatment;
+            requestConfiguration.TagForUnderAgeOfConsent= tagForUnderAgeOfConsent;
         MobileAds.SetRequestConfiguration(requestConfiguration);
         // Initialize the Google Mobile Ads SDK.
         //MobileAds.Initialize(HandleInitCompleteAction);
@@ -231,7 +234,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     IEnumerator ShowLoadingCoroutine()
     {
         loadingScreen.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSecondsRealtime(5);
         loadingScreen.SetActive(false);
     }
     #region AD INSPECTOR

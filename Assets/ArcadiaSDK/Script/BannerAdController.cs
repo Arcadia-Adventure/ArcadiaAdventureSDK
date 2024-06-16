@@ -174,6 +174,6 @@ public class BannerAdController : MonoBehaviour
     void OnBannerShow(bool show)
     {
         isShowing=show;
-        OnShow.Invoke(show);
+        OnShow?.Invoke(show);
     }
 }

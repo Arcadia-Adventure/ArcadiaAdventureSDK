@@ -24,6 +24,7 @@ public class UpdateManager : MonoBehaviour
 #endif
         PlayerPrefs.SetInt("ShowAvailableUpdate", 1);
     }
+#if UNITY_ANDROID
 
     IEnumerator CheckForUpdate()
     {
@@ -60,4 +61,6 @@ public class UpdateManager : MonoBehaviour
         var startUpdateRequest = appUpdateManager.StartUpdate(appUpdateInfo_i, appUpdateOptions_i);
         yield return startUpdateRequest;
     }
+#endif
+
 }
