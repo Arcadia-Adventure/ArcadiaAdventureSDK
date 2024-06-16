@@ -335,7 +335,8 @@ public class ArcadiaSdkManager : MonoBehaviour
 #if UNITY_IOS || UNITY_IPHONE
 		return "IOS";
 #endif
-
+        Debug.LogError("Convert Platform IOS or Android");
+        return "unknown";
     }
 
     public void ShowRateUs()
