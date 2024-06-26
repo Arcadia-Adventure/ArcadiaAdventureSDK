@@ -73,7 +73,16 @@ public class ArcadiaSdkManager : MonoBehaviour
         }
     }
     #endregion
-
+    public void SetLog(bool value)
+    {
+        PlayerPrefs.SetInt(nameof(enableLogs),value?1:0);
+        enableLogs=value;
+    }
+    public bool GetLog()
+    {
+        enableLogs=(PlayerPrefs.GetInt(nameof(enableLogs),enableLogs?1:0)==1)? true:false;
+        return enableLogs;
+    }
     //================================ Start_Region ================================
     #region Start_Region
 

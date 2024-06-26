@@ -30,7 +30,7 @@ public class AppOpenAdController : MonoBehaviour
     {
         _agent = this;
     }
-    private readonly TimeSpan APPOPEN_TIMEOUT = TimeSpan.FromHours(4);
+    private readonly TimeSpan APPOPEN_TIMEOUT = TimeSpan.FromMinutes(1);
     private DateTime appOpenExpireTime;
     private AppOpenAd appOpenAd;
     public bool IsAppOpenAdAvailable
