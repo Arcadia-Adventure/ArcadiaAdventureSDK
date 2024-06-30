@@ -16,7 +16,7 @@ public class TestSDK : MonoBehaviour
                 ArcadiaSdkManager.Agent.ShowInterstitialAd();
                 break;
             case 2:
-                //ArcadiaSdkManager.Agent;
+                AppOpenAdController.agent.ShowAppOpenAd();
                 break;
             case 3:
                 ArcadiaSdkManager.Agent.ShowBanner();
@@ -41,6 +41,15 @@ public class TestSDK : MonoBehaviour
                 break;
             case 10:
                 ArcadiaSdkManager.Agent.ShowAvailbleUpdate();
+                break;
+            case 11:
+                ArcadiaSdkManager.Agent.ShowMRecBanner();
+                break;
+            case 12:
+                ArcadiaSdkManager.Agent.HideMRecBanner();
+                break;
+            case 13:
+                ArcadiaSdkManager.Agent.DestroyMRecBannerAd();
                 break;
                 
         }

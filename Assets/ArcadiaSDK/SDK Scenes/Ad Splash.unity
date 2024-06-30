@@ -725,6 +725,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcadiaSdkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
+      propertyPath: mRecBannerAdPosition
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

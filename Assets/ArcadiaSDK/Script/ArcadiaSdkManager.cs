@@ -33,6 +33,9 @@ public class ArcadiaSdkManager : MonoBehaviour
     public bool showBannerInStart = false;
     public AdPosition bannerAdPosition = AdPosition.Top;
     public BannerType bannerType = BannerType.AdoptiveBanner;
+    [Header("MRec Banner")]
+    public AdPosition mRecBannerAdPosition = AdPosition.BottomRight;
+    public BannerType mRecBannerType = BannerType.MediumRectangle;
     [Header("Ads Setting")]
     public TagForChildDirectedTreatment tagForChildDirectedTreatment;
     public TagForUnderAgeOfConsent tagForUnderAgeOfConsent;
@@ -208,6 +211,19 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         BannerAdController.Agent.DestroyBannerAd();
     }
+    public void ShowMRecBanner()
+    {
+        if(removeAds)return;
+        MRecBannerAdController.Agent.ShowBanner(mRecBannerType,mRecBannerAdPosition,useTestIDs);
+    }
+    public void HideMRecBanner()
+    {
+        MRecBannerAdController.Agent.HideBanner();
+    }
+    public void DestroyMRecBannerAd()
+    {
+        MRecBannerAdController.Agent.DestroyBannerAd();
+    }
     public void ShowInterstitialAd(Action successCallBack = null, Action failCallBack=null)
     {
         if (removeAds)
@@ -268,7 +284,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     #endregion
     public static void PrintStatus(string message)
     {
-        if(ArcadiaSdkManager.Agent.enableLogs)
+        if(ArcadiaSdkManager.Agent&&ArcadiaSdkManager.Agent.enableLogs)
         print(message);
     }
     #endregion
