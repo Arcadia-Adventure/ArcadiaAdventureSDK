@@ -48,7 +48,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
     // Log a custom event to Firebase Analytics
-    public void LogEvent(string eventName, string parameterName, string parameterValue)
+    public static void LogEvent(string eventName, string parameterName, string parameterValue)
     {
         FirebaseAnalytics.LogEvent(eventName, parameterName, parameterValue);
     }

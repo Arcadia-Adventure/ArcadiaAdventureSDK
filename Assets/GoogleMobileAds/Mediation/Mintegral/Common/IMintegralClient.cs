@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-using GoogleMobileAds.Mediation.Mintegral.Api;
-
 namespace GoogleMobileAds.Mediation.Mintegral.Common
 {
     public interface IMintegralClient

@@ -71,8 +71,9 @@ public class AA_AnalyticsManager : MonoBehaviour
         FirebaseManager.LogLevelCompleteEvent(levelNo);
         GameAnalyticsManager.GameCompleteAnalytics(levelNo);
     }
-    public void NewAdEvent()
+    public void CustomEvent(string param, string value)
     {
-
+        FirebaseManager.LogEvent("custom",param,value);
+        GameAnalyticsManager.CustomEvent(param,value);
     }
 }

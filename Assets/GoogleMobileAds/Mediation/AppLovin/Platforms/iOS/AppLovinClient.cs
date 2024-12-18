@@ -14,7 +14,6 @@
 
 #if UNITY_IOS
 
-using UnityEngine;
 using GoogleMobileAds.Mediation.AppLovin.Common;
 
 namespace GoogleMobileAds.Mediation.AppLovin.iOS
@@ -31,19 +30,9 @@ namespace GoogleMobileAds.Mediation.AppLovin.iOS
             }
         }
 
-        public void Initialize()
-        {
-            Externs.GADUMInitializeAppLovin();
-        }
-
         public void SetHasUserConsent(bool hasUserConsent)
         {
             Externs.GADUMAppLovinSetHasUserConsent(hasUserConsent);
-        }
-
-        public void SetIsAgeRestrictedUser(bool isAgeRestrictedUser)
-        {
-            Externs.GADUMAppLovinSetIsAgeRestrictedUser(isAgeRestrictedUser);
         }
 
         public void SetDoNotSell(bool doNotSell)

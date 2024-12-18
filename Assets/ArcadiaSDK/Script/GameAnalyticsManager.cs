@@ -60,7 +60,9 @@ public class GameAnalyticsManager : MonoBehaviour
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete,"Level_Complete",levelNo.ToString(),levelNo);
     }
-
+    public static void CustomEvent(string param,string value)
+    {
+    }
     public static void AdTrackingAnalytics(String adType,String location)
     {
 
