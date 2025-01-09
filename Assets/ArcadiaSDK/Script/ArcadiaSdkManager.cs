@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
+using UnityEngine.UI;
 public class ArcadiaSdkManager : MonoBehaviour
 {
     //============================== Variables_Region ============================== 
@@ -21,7 +22,9 @@ public class ArcadiaSdkManager : MonoBehaviour
     }
 
     public RewardedAd rewardedAd;
-    [Header("[v2024.1.13]")]
+
+
+    [Header("[v25.1.9]")]
     public bool removeAds = false;
     public bool useTestIDs;
     public bool preCache = true;
@@ -37,9 +40,19 @@ public class ArcadiaSdkManager : MonoBehaviour
     public AdPosition mRecBannerAdPosition = AdPosition.BottomRight;
     public BannerType mRecBannerType = BannerType.MediumRectangle;
     [Header("Ads Setting")]
+    public Audience audience;
+    public enum Audience
+    {
+        General,
+        Mature,
+        Child,
+        Teen,
+        None
+    }
     public TagForChildDirectedTreatment tagForChildDirectedTreatment;
     public TagForUnderAgeOfConsent tagForUnderAgeOfConsent;
     public GameObject loadingScreen;
+    Text loadingText;
     private static GameIDs gameids = new GameIDs();
 
     [Space(20)]
@@ -78,12 +91,12 @@ public class ArcadiaSdkManager : MonoBehaviour
     #endregion
     public void SetLog(bool value)
     {
-        PlayerPrefs.SetInt(nameof(enableLogs),value?1:0);
-        enableLogs=value;
+        PlayerPrefs.SetInt(nameof(enableLogs), value ? 1 : 0);
+        enableLogs = value;
     }
     public bool GetLog()
     {
-        enableLogs=(PlayerPrefs.GetInt(nameof(enableLogs),enableLogs?1:0)==1)? true:false;
+        enableLogs = (PlayerPrefs.GetInt(nameof(enableLogs), enableLogs ? 1 : 0) == 1) ? true : false;
         return enableLogs;
     }
     //================================ Start_Region ================================
@@ -91,12 +104,12 @@ public class ArcadiaSdkManager : MonoBehaviour
 
     void Start()
     {
-        removeAds=PlayerPrefs.GetInt(nameof(removeAds),0)==1;
+        removeAds = PlayerPrefs.GetInt(nameof(removeAds), 0) == 1;
         LoadGameIds();
         InitAdmob();
         InternetCheckerInit();
-        if (showAvaiableUpdateInStart)
-            ShowAvailbleUpdate();
+        if (loadingText == null) loadingText = GetComponentInChildren<Text>(true);
+        if (showAvaiableUpdateInStart) ShowAvailbleUpdate();
     }
     public void InitAdmob()
     {
@@ -111,10 +124,31 @@ public class ArcadiaSdkManager : MonoBehaviour
         //deviceIds.Add("75EF8D155528C04DACBBA6F36F433035");
 #endif
         // Configure TagForChildDirectedTreatment and test device IDs.
-        RequestConfiguration requestConfiguration =
-            new RequestConfiguration();
-            requestConfiguration.TagForChildDirectedTreatment=tagForChildDirectedTreatment;
-            requestConfiguration.TagForUnderAgeOfConsent= tagForUnderAgeOfConsent;
+        MaxAdContentRating maxAdContentRating = MaxAdContentRating.G;
+        switch (audience)
+        {
+            case Audience.General:
+                maxAdContentRating = MaxAdContentRating.G;
+                break;
+            case Audience.Mature:
+                maxAdContentRating = MaxAdContentRating.MA;
+                break;
+            case Audience.Child:
+                maxAdContentRating = MaxAdContentRating.PG;
+                break;
+            case Audience.Teen:
+                maxAdContentRating = MaxAdContentRating.T;
+                break;
+            default:
+                maxAdContentRating = MaxAdContentRating.Unspecified;
+                break;
+        }
+        RequestConfiguration requestConfiguration = new RequestConfiguration
+        {
+            MaxAdContentRating = maxAdContentRating,
+            TagForChildDirectedTreatment = tagForChildDirectedTreatment,
+            TagForUnderAgeOfConsent = tagForUnderAgeOfConsent
+        };
         MobileAds.SetRequestConfiguration(requestConfiguration);
         // Initialize the Google Mobile Ads SDK.
         //MobileAds.Initialize(HandleInitCompleteAction);
@@ -155,8 +189,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     }
     public void OnRemoveAds()
     {
-        removeAds=true;
-        PlayerPrefs.SetInt(nameof(removeAds),1);
+        removeAds = true;
+        PlayerPrefs.SetInt(nameof(removeAds), 1);
         BannerAdController.Agent.DestroyBannerAd();
     }
     private AdRequest CreateAdRequest()
@@ -169,7 +203,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         RewardedAdController.agent.RequestAndLoadRewardedAd();
         if (!removeAds && myGameIds.interstitialAdId.Length > 1)
         {
-            InterstitialAdController.agent.RequestAndLoadInterstitialAd(null,useTestIDs);
+            InterstitialAdController.agent.RequestAndLoadInterstitialAd(null, useTestIDs);
         }
         if (!removeAds && myGameIds.appOpenAdId.Length > 1)
         {
@@ -178,7 +212,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         if (!removeAds && myGameIds.bannerAdId.Length > 1)
         {
             if (showBannerInStart)
-                BannerAdController.Agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
+                BannerAdController.Agent.ShowBanner(bannerType, bannerAdPosition, useTestIDs);
         }
     }
     void OnAppStateChanged(AppState state)
@@ -200,8 +234,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     }
     public void ShowBanner()
     {
-        if(removeAds)return;
-        BannerAdController.Agent.ShowBanner(bannerType,bannerAdPosition,useTestIDs);
+        if (removeAds) return;
+        BannerAdController.Agent.ShowBanner(bannerType, bannerAdPosition, useTestIDs);
     }
     public void HideBanner()
     {
@@ -213,8 +247,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     }
     public void ShowMRecBanner()
     {
-        if(removeAds)return;
-        MRecBannerAdController.Agent.ShowBanner(mRecBannerType,mRecBannerAdPosition,useTestIDs);
+        if (removeAds) return;
+        MRecBannerAdController.Agent.ShowBanner(mRecBannerType, mRecBannerAdPosition, useTestIDs);
     }
     public void HideMRecBanner()
     {
@@ -224,31 +258,68 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         MRecBannerAdController.Agent.DestroyBannerAd();
     }
-    public void ShowInterstitialAd(Action successCallBack = null, Action failCallBack=null)
+    public void ShowInterstitialAd(int timer, Action successCallBack = null, Action failCallBack = null)
+    {
+        StartCoroutine(ShowAdWithDelay(ShowInterstitialAd, successCallBack, failCallBack, timer));
+    }
+    public void ShowInterstitialAd(Action successCallBack = null, Action failCallBack = null)
     {
         if (removeAds)
         {
             return;
         }
         ShowLoadingScreen(true);
-        successCallBack+=()=>ShowLoadingScreen(false);
-        failCallBack+=()=>ShowLoadingScreen(false);
-        InterstitialAdController.agent.ShowInterstitialAd(successCallBack,failCallBack,useTestIDs);
+        successCallBack += () => ShowLoadingScreen(false);
+        failCallBack += () => ShowLoadingScreen(false);
+        InterstitialAdController.agent.ShowInterstitialAd(successCallBack, failCallBack, useTestIDs);
     }
-    public void ShowRewardedAd(Action<int> successCallBack = null, Action failCallBack=null)
+    public void ShowRewardedAd(int timer, Action<int> successCallBack = null, Action failCallBack = null)
+    {
+        StartCoroutine(ShowAdWithDelay(ShowRewardedAd, successCallBack, failCallBack, timer));
+    }
+    public void ShowRewardedAd(Action<int> successCallBack = null, Action failCallBack = null)
     {
         ShowLoadingScreen(true);
-        successCallBack+=(int reward)=>ShowLoadingScreen(false);
-        failCallBack+=()=>ShowLoadingScreen(false);
-        RewardedAdController.agent.ShowRewardedAd(successCallBack,failCallBack,useTestIDs);
+        successCallBack += (int reward) => ShowLoadingScreen(false);
+        failCallBack += () => ShowLoadingScreen(false);
+        RewardedAdController.agent.ShowRewardedAd(successCallBack, failCallBack, useTestIDs);
+    }
+    private IEnumerator ShowAdWithDelay(Action<Action, Action> AD, Action successCallBack = null, Action failCallBack = null, int timer = 0)
+    {
+        ShowLoadingScreen(true);
+        while (timer > 0)
+        {
+            UpdateLoadingText($"Loading ad... \n{timer}s left.");
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
+        AD.Invoke(successCallBack, failCallBack);
+    }
+    private IEnumerator ShowAdWithDelay(Action<Action<int>, Action> AD, Action<int> successCallBack = null, Action failCallBack = null, int timer = 0)
+    {
+        ShowLoadingScreen(true);
+        while (timer > 0)
+        {
+            UpdateLoadingText($"Loading ad... \n{timer}s left.");
+            yield return new WaitForSecondsRealtime(1);
+            timer--;
+        }
+        AD.Invoke(successCallBack, failCallBack);
+    }
+    private void UpdateLoadingText(string text)
+    {
+        if (loadingText != null) // assuming you have a UI Text element to show the countdown
+        {
+            loadingText.text = text;
+        }
     }
     public void ShowLoadingScreen(bool active)
     {
-        if(active)
+        if (active)
         {
-            if(loadingCoroutine!=null)
-            StopCoroutine(loadingCoroutine);
-            loadingCoroutine=StartCoroutine(ShowLoadingCoroutine());
+            if (loadingCoroutine != null)
+                StopCoroutine(loadingCoroutine);
+            loadingCoroutine = StartCoroutine(ShowLoadingCoroutine());
         }
         else
         {
@@ -284,8 +355,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     #endregion
     public static void PrintStatus(string message)
     {
-        if(ArcadiaSdkManager.Agent&&ArcadiaSdkManager.Agent.enableLogs)
-        print(message);
+        if (ArcadiaSdkManager.Agent && ArcadiaSdkManager.Agent.enableLogs)
+            print(message);
     }
     #endregion
 
@@ -324,7 +395,7 @@ public class ArcadiaSdkManager : MonoBehaviour
 #endif
     }
 #if UNITY_EDITOR
-    public string GetDatedVersion()
+    public static string GetDatedVersion()
     {
         // Get the current date and time
         DateTime currentDate = DateTime.Now;

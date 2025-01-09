@@ -10,10 +10,10 @@ public class TestSDK : MonoBehaviour
         switch (dropdown.value)
         {
             case 0:
-                ArcadiaSdkManager.Agent.ShowRewardedAd();
+                ArcadiaSdkManager.Agent.ShowRewardedAd(3);
                 break;
             case 1:
-                ArcadiaSdkManager.Agent.ShowInterstitialAd();
+                ArcadiaSdkManager.Agent.ShowInterstitialAd(3);
                 break;
             case 2:
                 AppOpenAdController.agent.ShowAppOpenAd();

@@ -231,9 +231,12 @@ MonoBehaviour:
   preCache: 1
   showAvaiableUpdateInStart: 1
   InternetRequired: 1
-  showBannerInStart: 0
+  showBannerInStart: 1
   bannerAdPosition: 0
   bannerType: 0
+  mRecBannerAdPosition: 4
+  mRecBannerType: 3
+  audience: 0
   tagForChildDirectedTreatment: 1
   tagForUnderAgeOfConsent: 1
   loadingScreen: {fileID: 3062688152476117955}
