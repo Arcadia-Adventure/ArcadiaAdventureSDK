@@ -16,7 +16,7 @@ public class TestSDK : MonoBehaviour
                 ArcadiaSdkManager.Agent.ShowInterstitialAd(3);
                 break;
             case 2:
-                AppOpenAdController.agent.ShowAppOpenAd();
+                ArcadiaSdkManager.Agent.OnAppStateChanged(AppState.Foreground);
                 break;
             case 3:
                 ArcadiaSdkManager.Agent.ShowBanner();
