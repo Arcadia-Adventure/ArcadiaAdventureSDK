@@ -2,7 +2,9 @@
 using System.Collections;
 using UnityEngine;
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -112,6 +114,12 @@ public class ArcadiaSdkManager : MonoBehaviour
     
     private void InitializeAdsManager()
     {
+        // Initialize AppStateEventNotifier
+        if (AppStateEventNotifier.Instance != null)
+        {
+            AppStateEventNotifier.Instance.gameObject.SetActive(true);
+        }
+        
         // Try to find an active ads manager
         adsManager = FindAdsManager();
         
@@ -145,32 +153,41 @@ public class ArcadiaSdkManager : MonoBehaviour
     
     private IAdsManager FindAdsManager()
     {
+#if UNITY_APPLOVIN
         // Try AppLovin first
         if (AppLovinAdsManager.Instance != null)
         {
             return AppLovinAdsManager.Instance;
         }
-        
+#endif
+
+#if UNITY_ADMOB
         // Try AdMob
         if (AdMobAdsManager.Instance != null)
         {
             return AdMobAdsManager.Instance;
         }
-        
+#endif
+
+        // If no ads manager is found, return null
+        Debug.LogWarning("No ads manager found. Please ensure either AppLovin or AdMob SDK is properly imported and configured.");
         return null;
     }
     
     private string GetSdkKey()
     {
         // Return appropriate SDK key based on which ads manager is being used
+#if UNITY_APPLOVIN
         if (adsManager is AppLovinAdsManager)
         {
             return myGameIds.appLovinSdkKey;
         }
-        else if (adsManager is AdMobAdsManager)
+#elif UNITY_ADMOB
+        if (adsManager is AdMobAdsManager)
         {
             return myGameIds.admobAppId;
         }
+#endif
         
         return "";
     }
@@ -252,6 +269,8 @@ public class ArcadiaSdkManager : MonoBehaviour
                 return BannerPosition.BottomLeft;
             case AdPosition.BottomRight:
                 return BannerPosition.BottomRight;
+            case AdPosition.Center:
+                return BannerPosition.Center;
             default:
                 return BannerPosition.Bottom;
         }
@@ -385,6 +404,8 @@ public class ArcadiaSdkManager : MonoBehaviour
     
     public void ShowLoadingScreen(bool active)
     {
+        if (loadingScreen == null) return;
+        
         if (active)
         {
             if (loadingCoroutine != null)
@@ -400,9 +421,12 @@ public class ArcadiaSdkManager : MonoBehaviour
     Coroutine loadingCoroutine;
     IEnumerator ShowLoadingCoroutine()
     {
-        loadingScreen.SetActive(true);
-        yield return new WaitForSecondsRealtime(5);
-        loadingScreen.SetActive(false);
+        if (loadingScreen != null)
+        {
+            loadingScreen.SetActive(true);
+            yield return new WaitForSecondsRealtime(5);
+            loadingScreen.SetActive(false);
+        }
     }
     
     // Ad Event Handlers
@@ -510,18 +534,25 @@ public class ArcadiaSdkManager : MonoBehaviour
     {
         IDs[] adids = gameids.id.ToArray();
         myGameIds = Array.Find(adids, id => id.platform == GetPlatformName());
+        
+        // Fallback if no matching platform found
+        if (myGameIds == null)
+        {
+            myGameIds = new IDs();
+            Debug.LogWarning($"No game IDs found for platform: {GetPlatformName()}");
+        }
     }
 
     static string GetPlatformName()
     {
 #if UNITY_ANDROID
         return "Android";
-#endif
-#if UNITY_IOS || UNITY_IPHONE
+#elif UNITY_IOS || UNITY_IPHONE
         return "IOS";
-#endif
-        Debug.LogError("Convert Platform IOS or Android");
+#else
+        Debug.LogError("Platform not supported. Please build for Android or iOS.");
         return "unknown";
+#endif
     }
 
     public void ShowRateUs()
@@ -529,7 +560,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         StoreReviewManager obj = FindObjectOfType<StoreReviewManager>();
         if (obj == null)
         {
-            var rate = new GameObject();
+            var rate = new GameObject("StoreReviewManager");
             obj = rate.AddComponent<StoreReviewManager>();
             obj.RateUs();
         }
@@ -544,7 +575,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         UpdateManager obj = FindObjectOfType<UpdateManager>();
         if (obj == null)
         {
-            var updateManager = new GameObject();
+            var updateManager = new GameObject("UpdateManager");
             obj = updateManager.AddComponent<UpdateManager>();
             obj.ShowAvailbleUpdate();
         }
@@ -557,15 +588,15 @@ public class ArcadiaSdkManager : MonoBehaviour
     public void InternetCheckerInit()
     {
 #if UNITY_EDITOR
-        // return;
+        // Skip internet check in editor
+        return;
 #endif
         if (InternetRequired && !removeAds)
         {
             InternetManager obj = FindObjectOfType<InternetManager>();
             if (obj == null)
             {
-                var net = new GameObject();
-                net.name = "InternetManager";
+                var net = new GameObject("InternetManager");
                 net.AddComponent<InternetManager>();
                 DontDestroyOnLoad(net);
             }
@@ -582,6 +613,9 @@ public class ArcadiaSdkManager : MonoBehaviour
             adsManager.OnAdShown -= OnAdShown;
             adsManager.OnAdClosed -= OnAdClosed;
         }
+        
+        // Unsubscribe from app state events
+        AppStateEventNotifier.AppStateChanged -= OnAppStateChanged;
     }
 }
 
@@ -598,7 +632,7 @@ public class IDs
     public string gameName;
     public string bundleId;
     public string admobAppId;
-    public string appLovinSdkKey;  // Added for AppLovin
+    public string appLovinSdkKey;
     public string appOpenAdId;
     public string bannerAdId;
     public string mrecAdId;

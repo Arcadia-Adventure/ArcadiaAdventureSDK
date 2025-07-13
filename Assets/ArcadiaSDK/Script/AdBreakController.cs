@@ -51,18 +51,23 @@ public class AdBreakController : MonoBehaviour
     
     private IAdsManager FindAdsManager()
     {
+    #if UNITY_APPLOVIN
         // Try AppLovin first
-        if (AppLovinAdsManager.Instance != null && AppLovinAdsManager.Instance.IsInitialized)
+        if (AppLovinAdsManager.Instance != null)
         {
             return AppLovinAdsManager.Instance;
         }
-        
+    #endif
+    
+    #if UNITY_ADMOB
         // Try AdMob
-        if (AdMobAdsManager.Instance != null && AdMobAdsManager.Instance.IsInitialized)
+        if (AdMobAdsManager.Instance != null)
         {
             return AdMobAdsManager.Instance;
         }
-        
+    #endif
+    
+        Debug.LogError("No ad SDK is available. Please import AdMob or AppLovin SDK.");
         return null;
     }
     

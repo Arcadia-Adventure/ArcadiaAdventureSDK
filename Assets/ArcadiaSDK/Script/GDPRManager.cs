@@ -1,3 +1,4 @@
+#if UNITY_ADMOB
 using UnityEngine;
 using GoogleMobileAds.Ump.Api;
 using GoogleMobileAds.Api;
@@ -83,3 +84,4 @@ public class GDPRManager : MonoBehaviour
         LoadConsentForm();
     }
 }
+#endif

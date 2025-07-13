@@ -1,3 +1,4 @@
+#if UNITY_ADMOB
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -513,3 +514,4 @@ public class AdMobAdsManager : MonoBehaviour, IAdsManager
         _mrecAds.Clear();
     }
 }
+#endif

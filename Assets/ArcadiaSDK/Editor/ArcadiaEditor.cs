@@ -9,142 +9,297 @@ using System.Reflection;
 using GameAnalyticsSDK;
 using GameAnalyticsSDK.Events;
 using UnityEditor;
-using GoogleMobileAds.Editor;
+using System.Linq;
+
 namespace GoogleMobileAds.Editor
 {
-	public class ArcadiaEditor : EditorWindow
-	{
-		[MenuItem("ArcadiaSDK/SDK Setup", false, 100)]
-		public static void Creat()
-		{
-			ArcadiaSdkManager ads = GameObject.FindObjectOfType<ArcadiaSdkManager>();
-			GameAnalytics GA = GameObject.FindObjectOfType<GameAnalytics>();
-			if (ads == null)
-			{
-				GameObject obj = new GameObject("ArcadiaSdkManager");
-				obj.AddComponent<ArcadiaSdkManager>();
-				obj.GetComponent<ArcadiaSdkManager>().LoadGameIds();
-			}
-			else
-			{
-				ads.GetComponent<ArcadiaSdkManager>().LoadGameIds();
-			}
+    public class ArcadiaEditor : EditorWindow
+    {
+        [MenuItem("ArcadiaSDK/SDK Setup", false, 100)]
+        public static void Creat()
+        {
+            ArcadiaSdkManager ads = GameObject.FindObjectOfType<ArcadiaSdkManager>();
+            GameAnalytics GA = GameObject.FindObjectOfType<GameAnalytics>();
+            
+            if (ads == null)
+            {
+                GameObject obj = new GameObject("ArcadiaSdkManager");
+                obj.AddComponent<ArcadiaSdkManager>();
+                obj.GetComponent<ArcadiaSdkManager>().LoadGameIds();
+            }
+            else
+            {
+                ads.GetComponent<ArcadiaSdkManager>().LoadGameIds();
+            }
 
-			if (GA == null)
-			{
-				GameObject obj = new GameObject("GameAnalytics");
-				obj.AddComponent<GameAnalytics>();
-			}
+            if (GA == null)
+            {
+                GameObject obj = new GameObject("GameAnalytics");
+                obj.AddComponent<GameAnalytics>();
+            }
 
+            // Configure GameAnalytics
+            GameAnalyticsManager.SetGAIds();
+            
+            // Configure AdMob if available
+            if (HasAdMobSDK())
+            {
+                AdmobAppIDConfig.SetAppID(ArcadiaSdkManager.myGameIds.admobAppId, 
+                    ArcadiaSdkManager.myGameIds.platform.Contains("IOS") ? 
+                    AdmobAppIDConfig.Platform.IOS : AdmobAppIDConfig.Platform.Android);
+            }
 
-			SDKConfig();
-			AdmobAppIDConfig.SetAppID(ArcadiaSdkManager.myGameIds.admobAppId, ArcadiaSdkManager.myGameIds.platform.Contains("IOS")? AdmobAppIDConfig.Platform.IOS : AdmobAppIDConfig.Platform.Android);
-			Selection.activeGameObject = GameObject.FindObjectOfType<ArcadiaSdkManager>().gameObject;
+            Selection.activeGameObject = GameObject.FindObjectOfType<ArcadiaSdkManager>().gameObject;
 
-			Debug.Log("Arcadia SDK Successfully Configured");
-		}
+            Debug.Log("Arcadia SDK Successfully Configured");
+        }
 
-		static void SDKConfig()
-		{
+        // ==== SYMBOL MANAGEMENT SECTION ====
+        
+        [MenuItem("ArcadiaSDK/Symbol Management/Update Script Symbols", false, 200)]
+        public static void UpdateScriptSymbols()
+        {
+            // Check for AdMob SDK
+            bool hasAdMob = HasAdMobSDK();
+            UpdateDefines("UNITY_ADMOB", hasAdMob, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            
+            // Check for AppLovin SDK
+            bool hasAppLovin = HasAppLovinSDK();
+            UpdateDefines("UNITY_APPLOVIN", hasAppLovin, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            
+            // Always enable GameAnalytics
+            UpdateDefines("gameanalytics_enabled", true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            
+            // Log configuration status
+            LogSDKConfiguration(hasAdMob, hasAppLovin);
+        }
 
-			GameAnalyticsManager.SetGAIds();
-			//pass ids here
-			UpdateDefines("gameanalytics_enabled", true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
-		}
+        [MenuItem("ArcadiaSDK/Symbol Management/Check Available SDKs", false, 201)]
+        public static void CheckAvailableSDKs()
+        {
+            bool hasAdMob = HasAdMobSDK();
+            bool hasAppLovin = HasAppLovinSDK();
+            
+            LogSDKConfiguration(hasAdMob, hasAppLovin);
+            
+            // Show current script symbols
+            var targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+            var currentSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
+            Debug.Log($"Current Script Symbols for {targetGroup}: {currentSymbols}");
+        }
 
+        [MenuItem("ArcadiaSDK/Symbol Management/Clean Old Symbols", false, 202)]
+        public static void CleanOldSymbols()
+        {
+            var oldSymbols = new string[] 
+            { 
+                "ADMOB_ENABLED", 
+                "APPLOVIN_ENABLED", 
+                "UNITY_ADS_ENABLED",
+                "GOOGLE_MOBILE_ADS"
+            };
+            
+            var groups = new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android };
+            
+            foreach (var symbol in oldSymbols)
+            {
+                UpdateDefines(symbol, false, groups);
+            }
+            
+            Debug.Log("Old symbols cleaned up.");
+        }
 
+        [MenuItem("ArcadiaSDK/Symbol Management/Force Enable AdMob", false, 203)]
+        public static void ForceEnableAdMob()
+        {
+            UpdateDefines("UNITY_ADMOB", true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            Debug.Log("UNITY_ADMOB symbol manually enabled.");
+        }
 
-		private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
-		{
-			foreach (var group in groups)
-			{
-				var defines = new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
-				var edited = false;
-				if (enabled && !defines.Contains(entry))
-				{
-					defines.Add(entry);
-					edited = true;
-				}
-				else if (!enabled && defines.Contains(entry))
-				{
-					defines.Remove(entry);
-					edited = true;
-				}
-				if (edited)
-				{
-					PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines.ToArray()));
-				}
-			}
-		}
+        [MenuItem("ArcadiaSDK/Symbol Management/Force Enable AppLovin", false, 204)]
+        public static void ForceEnableAppLovin()
+        {
+            UpdateDefines("UNITY_APPLOVIN", true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            Debug.Log("UNITY_APPLOVIN symbol manually enabled.");
+        }
 
-	}
+        [MenuItem("ArcadiaSDK/Symbol Management/Disable All Ad Symbols", false, 205)]
+        public static void DisableAllAdSymbols()
+        {
+            UpdateDefines("UNITY_ADMOB", false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            UpdateDefines("UNITY_APPLOVIN", false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            Debug.Log("All ad network symbols disabled.");
+        }
+
+        // ==== UTILITY METHODS ====
+
+        static bool HasAdMobSDK()
+        {
+            try
+            {
+                // Check if AdMob assembly exists
+                Assembly admobAssembly = Assembly.Load("GoogleMobileAds");
+                if (admobAssembly != null)
+                {
+                    Type mobileAdsType = admobAssembly.GetType("GoogleMobileAds.Api.MobileAds");
+                    return mobileAdsType != null;
+                }
+            }
+            catch (Exception)
+            {
+                // Assembly not found
+            }
+            
+            // Alternative check using Type.GetType
+            Type admobType = Type.GetType("GoogleMobileAds.Api.MobileAds");
+            return admobType != null;
+        }
+
+        static bool HasAppLovinSDK()
+        {
+            try
+            {
+                // Check if AppLovin assembly exists
+                var assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
+                var appLovinAssembly = assemblies.FirstOrDefault(a => a.GetName().Name.Contains("MaxSdk") || a.GetName().Name.Contains("AppLovin"));
+                
+                if (appLovinAssembly != null)
+                {
+                    Type maxSdkType = appLovinAssembly.GetType("MaxSdk");
+                    return maxSdkType != null;
+                }
+            }
+            catch (Exception)
+            {
+                // Assembly not found
+            }
+            
+            // Alternative check using Type.GetType
+            Type appLovinType = Type.GetType("MaxSdk");
+            return appLovinType != null;
+        }
+
+        static void LogSDKConfiguration(bool hasAdMob, bool hasAppLovin)
+        {
+            Debug.Log("=== Arcadia SDK Configuration ===");
+            Debug.Log($"AdMob SDK: {(hasAdMob ? "✓ Available" : "✗ Not Found")}");
+            Debug.Log($"AppLovin SDK: {(hasAppLovin ? "✓ Available" : "✗ Not Found")}");
+            Debug.Log($"GameAnalytics: ✓ Enabled");
+            
+            if (!hasAdMob && !hasAppLovin)
+            {
+                Debug.LogWarning("No ad networks found! Please import AdMob or AppLovin SDK.");
+            }
+            else if (hasAdMob && hasAppLovin)
+            {
+                Debug.Log("Both AdMob and AppLovin are available. AppLovin will be prioritized.");
+            }
+            
+            Debug.Log("=== Script Symbols Status ===");
+        }
+
+        private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
+        {
+            foreach (var group in groups)
+            {
+                var defines = new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
+                var edited = false;
+                
+                if (enabled && !defines.Contains(entry))
+                {
+                    defines.Add(entry);
+                    edited = true;
+                    Debug.Log($"Added '{entry}' symbol for {group}");
+                }
+                else if (!enabled && defines.Contains(entry))
+                {
+                    defines.Remove(entry);
+                    edited = true;
+                    Debug.Log($"Removed '{entry}' symbol for {group}");
+                }
+                
+                if (edited)
+                {
+                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, string.Join(";", defines.ToArray()));
+                }
+            }
+        }
+    }
 }
 
 public class AdmobAppIDConfig
 {
-	public enum Platform
-{
-    Android,
-    IOS
-}
+    public enum Platform
+    {
+        Android,
+        IOS
+    }
+    
     public static void SetAppID(string ID, Platform platform)
     {
-        Assembly editorAssembly = Assembly.Load("GoogleMobileAds.Editor");
-
-        if (editorAssembly != null)
+        try
         {
-            // Get the type of the GoogleMobileAdsSettings class.
-            Type settingsType = editorAssembly.GetType("GoogleMobileAds.Editor.GoogleMobileAdsSettings");
+            Assembly editorAssembly = Assembly.Load("GoogleMobileAds.Editor");
 
-            if (settingsType != null)
+            if (editorAssembly != null)
             {
-                // Call the LoadInstance method via reflection.
-                MethodInfo loadInstanceMethod = settingsType.GetMethod("LoadInstance", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                // Get the type of the GoogleMobileAdsSettings class.
+                Type settingsType = editorAssembly.GetType("GoogleMobileAds.Editor.GoogleMobileAdsSettings");
 
-                if (loadInstanceMethod != null)
+                if (settingsType != null)
                 {
-                    // Invoke the method to get an instance of the settings class.
-                    object settingsInstance = loadInstanceMethod.Invoke(null, null);
+                    // Call the LoadInstance method via reflection.
+                    MethodInfo loadInstanceMethod = settingsType.GetMethod("LoadInstance", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 
-                    if (settingsInstance != null)
+                    if (loadInstanceMethod != null)
                     {
-                        // Select the appropriate property based on the platform.
-                        string propertyName = platform == Platform.Android 
-                            ? "GoogleMobileAdsAndroidAppId" 
-                            : "GoogleMobileAdsIOSAppId";
+                        // Invoke the method to get an instance of the settings class.
+                        object settingsInstance = loadInstanceMethod.Invoke(null, null);
 
-                        PropertyInfo appIdProperty = settingsType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-
-                        if (appIdProperty != null)
+                        if (settingsInstance != null)
                         {
-                            // Set the App ID.
-                            appIdProperty.SetValue(settingsInstance, ID);
+                            // Select the appropriate property based on the platform.
+                            string propertyName = platform == Platform.Android 
+                                ? "GoogleMobileAdsAndroidAppId" 
+                                : "GoogleMobileAdsIOSAppId";
 
-                            // Save the asset changes.
-                            EditorUtility.SetDirty(settingsInstance as UnityEngine.Object);
-                            AssetDatabase.SaveAssets();
+                            PropertyInfo appIdProperty = settingsType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
 
-                            Debug.Log($"AdMob {platform} App ID set to: {ID}");
+                            if (appIdProperty != null)
+                            {
+                                // Set the App ID.
+                                appIdProperty.SetValue(settingsInstance, ID);
+
+                                // Save the asset changes.
+                                EditorUtility.SetDirty(settingsInstance as UnityEngine.Object);
+                                AssetDatabase.SaveAssets();
+
+                                Debug.Log($"AdMob {platform} App ID set to: {ID}");
+                            }
+                            else
+                            {
+                                Debug.LogError($"{propertyName} property not found.");
+                            }
                         }
-                        else
-                        {
-                            Debug.LogError($"{propertyName} property not found.");
-                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("LoadInstance method not found.");
                     }
                 }
                 else
                 {
-                    Debug.LogError("LoadInstance method not found.");
+                    Debug.LogError("GoogleMobileAdsSettings class not found in the assembly.");
                 }
             }
             else
             {
-                Debug.LogError("GoogleMobileAdsSettings class not found in the assembly.");
+                Debug.LogError("GoogleMobileAds.Editor assembly not found.");
             }
         }
-        else
+        catch (Exception ex)
         {
-            Debug.LogError("GoogleMobileAds.Editor assembly not found.");
+            Debug.LogError($"Error setting AdMob App ID: {ex.Message}");
         }
     }
 }

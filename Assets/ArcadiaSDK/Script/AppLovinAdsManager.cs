@@ -1,5 +1,7 @@
+#if UNITY_APPLOVIN
 using System;
 using System.Collections.Generic;
+using AppLovinMax.Scripts.IntegrationManager.Editor;
 using UnityEngine;
 
 public class AppLovinAdsManager : MonoBehaviour, IAdsManager
@@ -65,8 +67,6 @@ public class AppLovinAdsManager : MonoBehaviour, IAdsManager
             Debug.LogWarning("AppLovin SDK is already initialized.");
             return;
         }
-        
-        MaxSdk.SetUserId("USER_ID");
         MaxSdk.SetVerboseLogging(enableLogs);
         
         MaxSdk.InitializeSdk();
@@ -615,3 +615,4 @@ public class AppLovinAdsManager : MonoBehaviour, IAdsManager
         }
     }
 }
+#endif
