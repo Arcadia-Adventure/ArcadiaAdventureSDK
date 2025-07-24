@@ -30,7 +30,7 @@ public class ArcadiaSdkManager : MonoBehaviour
         None
     }
 
-    [Header("[v25.1.9]")]
+    [Header("[v25.7.13]")]
     public bool removeAds = false;
     public bool useTestIDs;
     public bool preCache = true;

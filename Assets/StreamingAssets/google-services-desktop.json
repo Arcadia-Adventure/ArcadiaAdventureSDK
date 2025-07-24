@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "318098927030",
-    "project_id": "test-646d1",
-    "storage_bucket": "test-646d1.appspot.com"
+    "project_number": "320878739219",
+    "project_id": "babys-terror-escape-the-b8bf8",
+    "storage_bucket": "babys-terror-escape-the-b8bf8.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:318098927030:android:f111900e85cd14574ca517",
+        "mobilesdk_app_id": "1:320878739219:android:8a0d82b5886d4a67aba4e6",
         "android_client_info": {
-          "package_name": "com.aa.arcadiaadventuresdk"
+          "package_name": "com.OmmyGames.BabysTerror"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "320878739219-1f6659ve37vu5m2me4j5hs9f2gon2cke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDU8ofhy7NKo4z8EKkXTXaW4r30Uzml1tA"
+          "current_key": "AIzaSyBdNRyxL60Shaf7cQ4tRjoo792Dd8RJjFg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320878739219-1f6659ve37vu5m2me4j5hs9f2gon2cke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320878739219-tfpcsc0vamm2o35oj8tvkmvbf5rgnpk4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.OmmyGames.BabysTerror",
+                "app_store_id": "1672844290"
+              }
+            }
+          ]
         }
       }
     }

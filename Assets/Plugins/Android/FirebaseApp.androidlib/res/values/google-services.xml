@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
-  <string name="gcm_defaultSenderId" translatable="false">318098927030</string>
-  <string name="google_storage_bucket" translatable="false">test-646d1.appspot.com</string>
-  <string name="project_id" translatable="false">test-646d1</string>
-  <string name="google_api_key" translatable="false">AIzaSyDU8ofhy7NKo4z8EKkXTXaW4r30Uzml1tA</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDU8ofhy7NKo4z8EKkXTXaW4r30Uzml1tA</string>
-  <string name="google_app_id" translatable="false">1:318098927030:android:f111900e85cd14574ca517</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">320878739219</string>
+  <string name="google_storage_bucket" translatable="false">babys-terror-escape-the-b8bf8.firebasestorage.app</string>
+  <string name="project_id" translatable="false">babys-terror-escape-the-b8bf8</string>
+  <string name="google_api_key" translatable="false">AIzaSyBdNRyxL60Shaf7cQ4tRjoo792Dd8RJjFg</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBdNRyxL60Shaf7cQ4tRjoo792Dd8RJjFg</string>
+  <string name="google_app_id" translatable="false">1:320878739219:android:8a0d82b5886d4a67aba4e6</string>
+  <string name="default_web_client_id" translatable="false">320878739219-1f6659ve37vu5m2me4j5hs9f2gon2cke.apps.googleusercontent.com</string>
 </resources>

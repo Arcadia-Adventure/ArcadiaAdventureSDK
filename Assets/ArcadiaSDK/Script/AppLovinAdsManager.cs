@@ -1,7 +1,6 @@
 #if UNITY_APPLOVIN
 using System;
 using System.Collections.Generic;
-using AppLovinMax.Scripts.IntegrationManager.Editor;
 using UnityEngine;
 
 public class AppLovinAdsManager : MonoBehaviour, IAdsManager

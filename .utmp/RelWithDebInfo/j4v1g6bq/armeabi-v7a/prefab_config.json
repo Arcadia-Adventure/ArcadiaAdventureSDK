@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "prefabPath": "/Users/umar/.gradle/caches/modules-2/files-2.1/com.google.prefab/cli/2.0.0/f2702b5ca13df54e3ca92f29d6b403fb6285d8df/cli-2.0.0-all.jar",
+  "packages": [
+    "/Users/umar/.gradle/caches/8.14.3/transforms/53dfe8539372b585d86efca23c39e85d/transformed/jetified-games-frame-pacing-1.10.0/prefab"
+  ]
+}

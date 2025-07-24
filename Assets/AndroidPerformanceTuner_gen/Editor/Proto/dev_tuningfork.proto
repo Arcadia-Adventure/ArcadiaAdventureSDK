@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "Google.Android.PerformanceTuner";
+
+enum Scene {
+    SCENE_INVALID = 0;
+    SCENE_ASSETS_ARCADIASDK_SDK_SCENES_AD_SPLASH = 1;
+    SCENE_ASSETS_ARCADIASDK_SDK_SCENES_DEMOGAME = 2;
+}
+
+message Annotation {
+    Scene scene = 1;
+}
+
+message FidelityParams {
+    int32 level = 1;
+}
