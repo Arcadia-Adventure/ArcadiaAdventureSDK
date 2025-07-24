@@ -1,5 +1,5 @@
 # ninja log v5
-0	334	1753381093664496649	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	dce72c338dbf5dd7
-334	526	1753381093853015745	/Users/umar/Desktop/Unity/ArcadiaAdventureSDK/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/j4v1g6bq/obj/arm64-v8a/libswappywrapper.so	40f4759705544c6b
-0	347	1753381465076382936	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	dce72c338dbf5dd7
-348	533	1753381465261322144	/Users/umar/Desktop/Unity/ArcadiaAdventureSDK/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/j4v1g6bq/obj/arm64-v8a/libswappywrapper.so	40f4759705544c6b
+0	327	1753383532392602846	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	dce72c338dbf5dd7
+327	533	1753383532595150983	/Users/umar/Desktop/Unity/ArcadiaAdventureSDK/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/j4v1g6bq/obj/arm64-v8a/libswappywrapper.so	40f4759705544c6b
+0	96	1753383715083152996	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	dce72c338dbf5dd7
+97	251	1753383715232301973	/Users/umar/Desktop/Unity/ArcadiaAdventureSDK/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/j4v1g6bq/obj/arm64-v8a/libswappywrapper.so	40f4759705544c6b
