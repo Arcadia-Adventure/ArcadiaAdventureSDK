@@ -557,7 +557,7 @@ public class ArcadiaSdkManager : MonoBehaviour
 
     public void ShowRateUs()
     {
-        StoreReviewManager obj = FindObjectOfType<StoreReviewManager>();
+        StoreReviewManager obj = FindFirstObjectByType<StoreReviewManager>();
         if (obj == null)
         {
             var rate = new GameObject("StoreReviewManager");
@@ -572,7 +572,7 @@ public class ArcadiaSdkManager : MonoBehaviour
     
     public void ShowAvailbleUpdate()
     {
-        UpdateManager obj = FindObjectOfType<UpdateManager>();
+        UpdateManager obj = FindFirstObjectByType<UpdateManager>();
         if (obj == null)
         {
             var updateManager = new GameObject("UpdateManager");
@@ -587,13 +587,13 @@ public class ArcadiaSdkManager : MonoBehaviour
     
     public void InternetCheckerInit()
     {
-#if UNITY_EDITOR
-        // Skip internet check in editor
-        return;
-#endif
+// #if UNITY_EDITOR
+//         // Skip internet check in editor
+//         return;
+// #endif
         if (InternetRequired && !removeAds)
         {
-            InternetManager obj = FindObjectOfType<InternetManager>();
+            InternetManager obj = FindFirstObjectByType<InternetManager>();
             if (obj == null)
             {
                 var net = new GameObject("InternetManager");

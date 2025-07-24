@@ -18,7 +18,7 @@ public class AA_AnalyticsManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = UnityEngine.Object.FindObjectOfType(typeof(AA_AnalyticsManager)) as AA_AnalyticsManager;
+                _instance = FindFirstObjectByType(typeof(AA_AnalyticsManager)) as AA_AnalyticsManager;
                 if (_instance == null)
                 {
                     GameObject obj = new GameObject("AA_AnalyticsManager");
