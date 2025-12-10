@@ -275,7 +275,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -357,18 +356,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1104926110
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,58 +720,6 @@ PrefabInstance:
     - target: {fileID: 4424919827445959595, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
       propertyPath: m_Name
       value: ArcadiaSdkManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: audience
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: enableLogs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: useTestIDs
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.bundleId
-      value: com.OmmyGames.BabysTerror
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.gameName
-      value: BabysTerror
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.platform
-      value: Android
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.bannerAdId
-      value: ec0f01309b16816c
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: bannerAdPosition
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.appLovinSdkKey
-      value: XdgfHQhF49ClT22ZVzmJqQAELwp3ReQ9Kp2NiykF8Sy2ggDGV1X26ELaX3kguL7DKPiwU4bxB8ByDO98KMVARC
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.interstitialAdId
-      value: e5bab4e15b2cee85
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.rewardedVideoAdId
-      value: 2c3d2fc2362565c1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.gameKey_GameAnaytics
-      value: 2cdedb4c4be3969f0b55026347bcaa08
-      objectReference: {fileID: 0}
-    - target: {fileID: 7555396864995659625, guid: a76bc769e3d6a49e5b1bd010ceafb275, type: 3}
-      propertyPath: Ids.secretKey_GameAnaytics
-      value: cdea76d46957e5a05b56cde39326344ccc627496
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

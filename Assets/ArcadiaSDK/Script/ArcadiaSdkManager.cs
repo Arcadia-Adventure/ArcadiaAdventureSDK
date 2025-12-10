@@ -105,7 +105,6 @@ public class ArcadiaSdkManager : MonoBehaviour
     void Start()
     {
         removeAds = PlayerPrefs.GetInt(nameof(removeAds), 0) == 1;
-        LoadGameIds();
         InitializeAdsManager();
         InternetCheckerInit();
         if (loadingText == null) loadingText = GetComponentInChildren<Text>(true);
@@ -159,6 +158,13 @@ public class ArcadiaSdkManager : MonoBehaviour
         {
             return AppLovinAdsManager.Instance;
         }
+        else
+        {
+            //Create AppLovinAdsManager if not found
+            GameObject applovinManagerObj = new ("AppLovinAdsManager");
+            AppLovinAdsManager applovinManager = applovinManagerObj.AddComponent<AppLovinAdsManager>();
+            DontDestroyOnLoad(applovinManagerObj);
+        }
 #endif
 
 #if UNITY_ADMOB
@@ -166,6 +172,13 @@ public class ArcadiaSdkManager : MonoBehaviour
         if (AdMobAdsManager.Instance != null)
         {
             return AdMobAdsManager.Instance;
+        }
+        else
+        {
+            //Create AdMobAdsManager if not found
+            GameObject admobManagerObj = new ("AdMobAdsManager");
+            AdMobAdsManager admobManager = admobManagerObj.AddComponent<AdMobAdsManager>();
+            DontDestroyOnLoad(admobManagerObj);
         }
 #endif
 

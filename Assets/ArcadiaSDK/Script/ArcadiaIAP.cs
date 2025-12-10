@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
@@ -11,14 +9,14 @@ public class ArcadiaIAP : MonoBehaviour
     void OnEnable()
     {
         GetComponent<CodelessIAPButton>().onProductFetched.AddListener(UpdatePriceText);
-        GetComponent<CodelessIAPButton>().onPurchaseComplete.AddListener(OnPurchase);
+        GetComponent<CodelessIAPButton>().onOrderConfirmed.AddListener(OnPurchase);
     }
     void OnDisable()
     {
         GetComponent<CodelessIAPButton>().onProductFetched.RemoveListener(UpdatePriceText);
-        GetComponent<CodelessIAPButton>().onPurchaseComplete.RemoveListener(OnPurchase);
+        GetComponent<CodelessIAPButton>().onOrderConfirmed.RemoveListener(OnPurchase);
     }
-    public void OnPurchase(Product product)
+    public void OnPurchase(ConfirmedOrder order)
     {
         switch (iAPType)
         {

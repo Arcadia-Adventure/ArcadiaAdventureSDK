@@ -227,32 +227,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   removeAds: 0
-  useTestIDs: 0
+  useTestIDs: 1
   preCache: 1
   showAvaiableUpdateInStart: 1
   InternetRequired: 1
   showBannerInStart: 1
-  bannerAdPosition: 0
+  bannerAdPosition: 1
   bannerType: 0
   mRecBannerAdPosition: 4
   mRecBannerType: 3
-  audience: 0
-  tagForChildDirectedTreatment: 1
-  tagForUnderAgeOfConsent: 1
+  audience: 1
   loadingScreen: {fileID: 3062688152476117955}
   Ids:
-    platform: 
-    gameName: 
-    bundleId: 
-    admobAppId: 
+    platform: Android
+    gameName: BabysTerror
+    bundleId: com.OmmyGames.BabysTerror
+    admobAppId: ca-app-pub-6019321014497002~6518163503
+    appLovinSdkKey: 
     appOpenAdId: 
-    bannerAdId: 
+    bannerAdId: ca-app-pub-6019321014497002/2578918496
     mrecAdId: 
-    interstitialAdId: 
-    rewardedVideoAdId: 
-    gameKey_GameAnaytics: 
-    secretKey_GameAnaytics: 
-  enableLogs: 0
+    interstitialAdId: ca-app-pub-6019321014497002/6205234512
+    rewardedVideoAdId: ca-app-pub-6019321014497002/2200209195
+    gameKey_GameAnaytics: 41bc208371a27c9266a4c39b7ee16066
+    secretKey_GameAnaytics: 81939bccca728165cd764b8eff1d0066d62ce9bf
+  enableLogs: 1
 --- !u!114 &8314005554208434004
 MonoBehaviour:
   m_ObjectHideFlags: 0
